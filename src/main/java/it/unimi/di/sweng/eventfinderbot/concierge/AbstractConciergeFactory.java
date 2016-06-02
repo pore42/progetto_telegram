@@ -5,7 +5,7 @@ package it.unimi.di.sweng.eventfinderbot.concierge;
  */
 public abstract class AbstractConciergeFactory {
 
-    private IConcierge concierge;
+    protected IConcierge concierge;
 
     public abstract IConcierge instance();
 }
