@@ -10,6 +10,7 @@ import com.pengrad.telegrambot.model.request.KeyboardButton;
 import com.pengrad.telegrambot.model.request.ReplyKeyboardMarkup;
 import com.pengrad.telegrambot.request.SendMessage;
 import it.unimi.di.sweng.eventfinderbot.concierge.AbstractConciergeFactory;
+import it.unimi.di.sweng.eventfinderbot.concierge.IConcierge;
 import it.unimi.di.sweng.eventfinderbot.model.Event;
 import it.unimi.di.sweng.eventfinderbot.model.Request;
 import it.unimi.di.sweng.eventfinderbot.model.Response;
@@ -33,7 +34,6 @@ public class BotResource extends ServerResource {
 			return null;
 		}
 
-		// tieni update
 		final Update update = BotUtils.parseUpdate(data.getText());
 
 		if (update.updateId() == null) {
@@ -43,6 +43,32 @@ public class BotResource extends ServerResource {
 		}
 
 		final TelegramBot bot = TelegramBotAdapter.build(Configs.INSTANCE.BOT_TOKEN);
+
+		RequestBuilder requestBuilder = new RequestBuilder(update);
+		Request request = requestBuilder.createRequest();
+
+		long chatId = request.getChatId();
+		EventFinderBot eventFinderBot = EventFinderBot.instance();
+		if (eventFinderBot.isNewUser(request.getChatId())) {
+
+			String message = "Benvenuto "+update.message().chat().firstName();
+			SendMessage msg = new SendMessage(chatId, message);
+			bot.execute(msg);
+
+			eventFinderBot.addNewUser(request.getChatId());
+		}
+
+		Response response = eventFinderBot.executeCommmand(request);
+
+		String eventMessage = "";
+		SendMessage msg;
+		List<Event> events = response.getContent();
+		for(int i = 0; i < events.size(); i++){
+			eventMessage = events.get(i).getName() + "\n" +
+					"/dettagli" + i;
+			msg = new SendMessage(chatId, eventMessage);
+			bot.execute(msg);
+		}
 
 		return null;
 	}
