@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Response {
 
-    enum ResponseType { HERE_AND_NOW }
+    public enum ResponseType { HERE_AND_NOW }
 
     private ResponseType type;
     private long chatID;
