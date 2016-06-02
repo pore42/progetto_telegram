@@ -15,4 +15,12 @@ public class RequestHereToday extends Request {
         this.location = location;
         this.today = new Date();
     }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public Date getToday() {
+        return today;
+    }
 }
