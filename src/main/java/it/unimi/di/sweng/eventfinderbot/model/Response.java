@@ -22,4 +22,12 @@ public class Response {
 
         return new ArrayList<Event>(content);
     }
+
+    public ResponseType getType() {
+        return type;
+    }
+
+    public long getChatID() {
+        return chatID;
+    }
 }
