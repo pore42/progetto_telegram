@@ -20,6 +20,6 @@ public class Response {
 
     public ArrayList<Event> getContent() {
 
-        return new ArrayList<>(content);
+        return new ArrayList<Event>(content);
     }
 }
