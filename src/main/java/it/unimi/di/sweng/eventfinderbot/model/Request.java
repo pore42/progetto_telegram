@@ -3,13 +3,13 @@ package it.unimi.di.sweng.eventfinderbot.model;
 
 public abstract class Request {
 
-    private final int chatId;
+    private final long chatId;
 
-    protected Request(int chatId) {
+    protected Request(long chatId) {
         this.chatId = chatId;
     }
 
-    public int getChatId() {
+    public long getChatId() {
         return chatId;
     }
 }

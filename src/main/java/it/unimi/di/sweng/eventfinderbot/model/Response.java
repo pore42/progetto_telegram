@@ -5,16 +5,13 @@ import java.util.List;
 
 public class Response {
 
-    enum ResponseType {
-
-        HERE_AND_NOW
-    }
+    enum ResponseType { HERE_AND_NOW }
 
     private ResponseType type;
-    private int chatID;
+    private long chatID;
     private List<Event> content;
 
-    public Response(List<Event> content, ResponseType type, int chatID) {
+    public Response(List<Event> content, ResponseType type, long chatID) {
 
         this.content = content;
         this.chatID = chatID;
