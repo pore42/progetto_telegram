@@ -52,7 +52,7 @@ pitest {
 }
 
 shadowJar {
-    archiveName 'echobot.jar'
+    archiveName 'eventfinderbot.jar'
 }
 
 task stage() {
