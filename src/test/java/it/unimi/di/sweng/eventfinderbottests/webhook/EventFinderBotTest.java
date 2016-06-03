@@ -11,6 +11,7 @@ import org.junit.rules.Timeout;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -107,7 +108,7 @@ public class EventFinderBotTest {
         EventFinderBot efb = EventFinderBot.instance();
         efb.addNewUser(123);
 
-        Request req = new RequestHereToday(123,location);
+        Request req = new RequestHereToday(123,location,new Date(1464970809) );
         Response res = efb.executeCommmand(req);
 
         assertEquals(Response.ResponseType.HERE_AND_NOW, res.getType());
@@ -124,7 +125,7 @@ public class EventFinderBotTest {
         EventFinderBot.initialize(new MockConciergeFactory());
         EventFinderBot efb = EventFinderBot.instance();
 
-        Request req = new RequestHereToday(123,location);
+        Request req = new RequestHereToday(123,location, new Date(1464970809));
         efb.executeCommmand(req);
     }
     

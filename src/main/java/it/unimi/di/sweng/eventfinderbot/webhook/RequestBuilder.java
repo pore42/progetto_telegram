@@ -7,6 +7,8 @@ import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import it.unimi.di.sweng.eventfinderbot.model.RequestHereToday;
 
+import java.util.Date;
+
 /**
  * Created by Imran on 02/06/16.
  */
@@ -22,10 +24,10 @@ public class RequestBuilder {
     public Request createRequest(){
         message = update.message();
         chat = message.chat();
-
+        Date date = new Date(message.date());
         if(message.location() != null){
             Location location = new Location(message.location().longitude(), message.location().latitude());
-            return new RequestHereToday(chat.id(), location);
+            return new RequestHereToday(chat.id(), location, date);
         }
         return null;
     }
