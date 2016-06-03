@@ -41,7 +41,6 @@ public class TestConcierge {
     public void test1() {
 
         IEbApi api = apiFactory.instance();
-
         ApiStaticMockWrapper.initMock(api);
 
         ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
@@ -61,5 +60,17 @@ public class TestConcierge {
         when(api.getEvents(request.getLocation(), today)).thenReturn(new ArrayList<Event>());
 
         assertEquals(Response.ResponseType.HERE_AND_NOW, concierge.execute(request).getType());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test2() {
+
+        IEbApi api = apiFactory.instance();
+        ApiStaticMockWrapper.initMock(api);
+
+        ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
+        Concierge concierge = (Concierge) factory.instance();
+
+        concierge.execute(null);
     }
 }

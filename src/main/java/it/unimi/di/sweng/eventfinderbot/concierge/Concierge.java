@@ -16,8 +16,15 @@ public class Concierge implements IConcierge {
 
     private Stack<Response> history;
 
+    public Concierge() {
+
+        history = new Stack<Response>();
+    }
+
     @Override
     public Response execute(Request request) {
+
+        Response current = null;
 
         if (request instanceof RequestHereToday) {
 
@@ -27,9 +34,13 @@ public class Concierge implements IConcierge {
                     ((RequestHereToday) request).getToday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
             );
 
-            return new Response(content, Response.ResponseType.HERE_AND_NOW, request.getChatId());
+            current = new Response(content, Response.ResponseType.HERE_AND_NOW, request.getChatId());
         }
 
-        return null;
+        if (current == null) throw new IllegalStateException();
+
+        history.push(current);
+
+        return current;
     }
 }
