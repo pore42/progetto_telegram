@@ -25,8 +25,16 @@ public class RequestProcessor {
     public List<SendMessage> process() {
 
         messagesList = new ArrayList<SendMessage>();
-        Message message = update.message();
-        Chat chat = message.chat();
+        Message message;
+        Chat chat;
+
+        try {
+            message = update.message();
+            chat = message.chat();
+        }catch(NullPointerException npe){
+            System.out.println("Received invalid update, message == null");
+            return messagesList;
+        }
 
         final boolean IS_NEW_USER = eventFinderBot.isNewUser(chat.id());
         final boolean IS_HERE_AND_NOW_COMMAND = isHereAndNowCommand(message);
@@ -62,6 +70,11 @@ public class RequestProcessor {
             return messagesList;
         }
 
+        final boolean IS_START_COMMAND = isStartCommand(message.text());
+
+        if(IS_START_COMMAND)
+            sendWelcomeMessage(chat);
+
         return messagesList;
     }
 
@@ -77,5 +90,22 @@ public class RequestProcessor {
         SendMessage headerMessage = new SendMessage(chatId, message);
         headerMessage.parseMode(ParseMode.Markdown);
         messagesList.add(headerMessage);
+    }
+
+    private boolean isStartCommand(String text) {
+        return text.equals(BotConfigs.INSTANCE.ACCEPTED_COMMMANDS.get(0));
+    }
+
+    private void sendWelcomeMessage(Chat chat){
+        SendMessage welcomeMessage = new SendMessage(chat.id(), "Benvenuto "+chat.firstName());
+        messagesList.add(welcomeMessage);
+        sendKeyboard(chat.id());
+    }
+
+    private void sendKeyboard(long chatId){
+
+        SendMessage keyboardMessage = new SendMessage(chatId, "Cosa vuoi fare?");
+        keyboardMessage.replyMarkup(BotConfigs.INSTANCE.KEYBOARD_BUTTONS);
+        messagesList.add(keyboardMessage);
     }
 }
