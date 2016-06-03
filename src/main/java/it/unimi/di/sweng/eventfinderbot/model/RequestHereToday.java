@@ -11,6 +11,7 @@ public class RequestHereToday extends Request {
     private Date today;
 
     public RequestHereToday(long chatId, Location location) {
+
         super(chatId);
         this.location = location;
         this.today = new Date();
