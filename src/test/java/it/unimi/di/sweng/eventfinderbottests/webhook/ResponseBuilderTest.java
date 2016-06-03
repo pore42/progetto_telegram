@@ -10,8 +10,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.*;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -50,5 +50,21 @@ public class ResponseBuilderTest {
 
         assertEquals(location.latitude(), req.getLocation().getLatitude(), DELTA);
         assertEquals(location.longitude(), req.getLocation().getLongitude(), DELTA);
+    }
+    
+    @Test
+    public void BuildHereTodayNullTest(){
+    	  Update update = mock(Update.class);
+          Message message = mock(Message.class);
+          Chat chat = mock(Chat.class);
+
+          when(chat.id()).thenReturn((long) 124567890);
+          when(message.chat()).thenReturn(chat);
+          when(message.location()).thenReturn(null);
+          when(update.message()).thenReturn(message);
+
+          RequestBuilder builder = new RequestBuilder(update);
+          assertNull(builder.createRequest());
+         
     }
 }
