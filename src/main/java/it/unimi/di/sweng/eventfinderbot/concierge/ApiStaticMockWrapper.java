@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Riccardo Bianchi on 03/06/16.
  */
-public class ApiStaticMockWrapper {
+public final class ApiStaticMockWrapper {
 
     private static IEbApi api;
 
@@ -22,15 +22,5 @@ public class ApiStaticMockWrapper {
     public static List<Event> getEvents(Location location, LocalDate date) {
 
         return api.getEvents(location, date);
-    }
-
-    public static List<Event> getEvents(String city, LocalDate date) {
-
-        return api.getEvents(city, date);
-    }
-
-    public static Event getEventById(String id) {
-
-        return getEventById(id);
     }
 }
