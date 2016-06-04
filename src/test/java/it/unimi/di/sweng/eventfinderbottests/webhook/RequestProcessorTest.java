@@ -152,7 +152,7 @@ public class RequestProcessorTest {
         RequestProcessor reqProcessor = new RequestProcessor(update);
 
         List<SendMessage> message = reqProcessor.process();
-        assertEquals(0, message.size());
+        assertEquals(2, message.size());
     }
 
     @Test

@@ -71,10 +71,13 @@ public class RequestProcessor {
         }
 
         final boolean IS_START_COMMAND = isStartCommand(message.text());
+        final boolean IS_VALID_COMMAND = isValidCommand(message.text());
 
         if(IS_START_COMMAND)
             sendWelcomeMessage(chat);
 
+        if(!IS_VALID_COMMAND)
+            sendInvalidCommandMessage(update.message().chat().id());
         return messagesList;
     }
 
@@ -96,12 +99,20 @@ public class RequestProcessor {
         return text.equals(BotConfigs.INSTANCE.ACCEPTED_COMMMANDS.get(0));
     }
 
+    private boolean isValidCommand(String text) {
+        return BotConfigs.INSTANCE.ACCEPTED_COMMMANDS.contains(text);
+    }
     private void sendWelcomeMessage(Chat chat){
         SendMessage welcomeMessage = new SendMessage(chat.id(), "Benvenuto "+chat.firstName());
         messagesList.add(welcomeMessage);
         sendKeyboard(chat.id());
     }
 
+    private void sendInvalidCommandMessage(long chatId){
+        SendMessage invalidCommandMessage = new SendMessage(chatId, "Comando non valido");
+        messagesList.add(invalidCommandMessage);
+        sendKeyboard(chatId);
+    }
     private void sendKeyboard(long chatId){
 
         SendMessage keyboardMessage = new SendMessage(chatId, "Cosa vuoi fare?");
