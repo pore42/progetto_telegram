@@ -20,7 +20,6 @@ public class BotResource extends ServerResource {
 	@Post
 	public Representation update(Representation data) throws IOException {
 
-		getLogger().info("Request received\n");
 		final String token = getAttribute("token");
 		if (!Configs.INSTANCE.SERVER_TOKEN.equals(token)) {
 			setStatus(Status.CLIENT_ERROR_FORBIDDEN, "Worng server token");
@@ -28,8 +27,6 @@ public class BotResource extends ServerResource {
 		}
 
 		final Update update = BotUtils.parseUpdate(data.getText());
-
-		getLogger().info("UPDATE => "+update);
 
 		if (update.updateId() == null) {
 			getLogger().warning("Can't parse update, text was: \"" + data.getText() + "\"");

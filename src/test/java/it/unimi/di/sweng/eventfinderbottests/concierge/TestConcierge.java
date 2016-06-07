@@ -1,6 +1,6 @@
 package it.unimi.di.sweng.eventfinderbottests.concierge;
 
-import it.unimi.di.sweng.eventfinderbot.concierge.ApiStaticMockWrapper;
+import it.unimi.di.sweng.eventfinderbot.concierge.EBApiStaticWrapper;
 import it.unimi.di.sweng.eventfinderbot.concierge.Concierge;
 import it.unimi.di.sweng.eventfinderbot.concierge.ConciergeFactoryConcrete;
 import it.unimi.di.sweng.eventfinderbot.ebapi.AbstractEbApiFactory;
@@ -12,6 +12,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -41,7 +42,7 @@ public class TestConcierge {
     public void test1() {
 
         IEbApi api = apiFactory.instance();
-        ApiStaticMockWrapper.initMock(api);
+        EBApiStaticWrapper.initMock(api);
 
         ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
         Concierge concierge = (Concierge) factory.instance();
@@ -49,15 +50,13 @@ public class TestConcierge {
         RequestHereToday request = new RequestHereToday(
 
                 123456,
-                new Location(45.7782314, 8.8753254)
+                new Location(45.7782314, 8.8753254),
+                new Date()
         );
-
-
-        LocalDate today = request.getToday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         // Mocking
 
-        when(api.getEvents(request.getLocation(), today)).thenReturn(new ArrayList<Event>());
+        when(api.getEvents(request.getLocation(), request.getToday())).thenReturn(new ArrayList<Event>());
 
         assertEquals(Response.ResponseType.HERE_AND_NOW, concierge.execute(request).getType());
     }
@@ -66,7 +65,7 @@ public class TestConcierge {
     public void test2() {
 
         IEbApi api = apiFactory.instance();
-        ApiStaticMockWrapper.initMock(api);
+        EBApiStaticWrapper.initMock(api);
 
         ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
         Concierge concierge = (Concierge) factory.instance();

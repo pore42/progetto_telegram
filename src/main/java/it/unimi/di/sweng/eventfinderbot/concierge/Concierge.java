@@ -1,11 +1,9 @@
 package it.unimi.di.sweng.eventfinderbot.concierge;
 
-import it.unimi.di.sweng.eventfinderbot.model.Event;
-import it.unimi.di.sweng.eventfinderbot.model.Request;
-import it.unimi.di.sweng.eventfinderbot.model.RequestHereToday;
-import it.unimi.di.sweng.eventfinderbot.model.Response;
+import it.unimi.di.sweng.eventfinderbot.model.*;
 
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Stack;
 
@@ -28,11 +26,10 @@ public class Concierge implements IConcierge {
 
         if (request instanceof RequestHereToday) {
 
-            List<Event> content = ApiStaticMockWrapper.getEvents(
+            Date userDate = ((RequestHereToday) request).getToday();
+            Location location = ((RequestHereToday) request).getLocation();
 
-                    ((RequestHereToday) request).getLocation(),
-                    ((RequestHereToday) request).getToday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-            );
+            List<Event> content = EBApiStaticWrapper.getEvents(location, userDate);
 
             current = new Response(content, Response.ResponseType.HERE_AND_NOW, request.getChatId());
         }

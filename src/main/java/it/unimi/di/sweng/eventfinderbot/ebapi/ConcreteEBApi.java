@@ -2,6 +2,9 @@ package it.unimi.di.sweng.eventfinderbot.ebapi;
 
 import it.unimi.di.sweng.eventfinderbot.model.Event;
 import it.unimi.di.sweng.eventfinderbot.model.Location;
+import org.restlet.Client;
+import org.restlet.Context;
+import org.restlet.data.Protocol;
 import org.restlet.resource.ClientResource;
 
 import java.text.DateFormat;
@@ -24,7 +27,10 @@ public class ConcreteEBApi implements IEbApi {
                           "&start_date.range_start=" + df.format(date) +
                           "&sort_by=" + Configs.INSTANCE.EBAPI_SORT();
 
+
+        final Client client = new Client(new Context(), Protocol.HTTPS);
         final ClientResource cr = new ClientResource(Configs.INSTANCE.EBAPI_ENDPOINT() + endPoint + postfix);
+        cr.setNext(client);
         final GetEventsResource ge = cr.wrap(GetEventsResource.class);
 
         EBApiResponse response = ge.getEvents();

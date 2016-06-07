@@ -24,22 +24,6 @@ public class EventFinderBotTest {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max
 
-    private class MockConciergeFactory extends AbstractConciergeFactory {
-
-        @Override
-        public IConcierge instance() {
-            return new IConcierge() {
-                @Override
-                public Response execute(Request request) {
-                    List<Event> events = new ArrayList<Event>();
-                    Event event = new Event("12343212", "Concerto Verdi","VIVA Verdi" , "06/06/2016", "Milan ", "verdi.jpg");
-                    events.add(event);
-                    return new Response(events, Response.ResponseType.HERE_AND_NOW, request.getChatId());
-                }
-            };
-        }
-    }
-
     @Test(expected = IllegalStateException.class)
     public void testThrowsExcpetion(){
         EventFinderBot.destroy();

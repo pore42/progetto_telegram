@@ -26,7 +26,7 @@ public class RequestBuilder {
         chat = message.chat();
         Date date = new Date(message.date());
         if(message.location() != null){
-            Location location = new Location(message.location().longitude(), message.location().latitude());
+            Location location = new Location(message.location().latitude(), message.location().longitude());
             return new RequestHereToday(chat.id(), location, date);
         }
         return null;
