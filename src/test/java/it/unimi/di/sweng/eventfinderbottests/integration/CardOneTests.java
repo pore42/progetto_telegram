@@ -30,7 +30,7 @@ public class CardOneTests {
         RequestProcessor reqProcessor = new RequestProcessor(update);
 
         List<SendMessage> message = reqProcessor.process();
-        assertTrue(message.size() > 1 && message.size() <= 6);
+        assertTrue(message.size() >= 1 && message.size() <= 6);
     }
 
     @Test
