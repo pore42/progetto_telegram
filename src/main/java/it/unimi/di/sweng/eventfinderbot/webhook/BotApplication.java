@@ -1,4 +1,4 @@
-package it.unimi.di.sweng.echobot;
+package it.unimi.di.sweng.eventfinderbot.webhook;
 
 import org.restlet.Application;
 import org.restlet.Restlet;

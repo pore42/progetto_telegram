@@ -1,13 +1,10 @@
-package it.unimi.di.sweng.echobot;
+package it.unimi.di.sweng.eventfinderbot.webhook;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.TelegramBotAdapter;
 import com.pengrad.telegrambot.request.SetWebhook;
 import com.pengrad.telegrambot.response.BaseResponse;
 
-/**
- * Comunica a Telegram l'URL del <em>webhook</em> relativo alle <em>update</em>.
- */
 public class SetWebHook {
 
 	public static void main(String[] args) {
