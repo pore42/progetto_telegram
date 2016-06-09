@@ -28,10 +28,8 @@ public class RequestProcessor {
             addNewUser(message);
 
         Command command = createCommand();
-        if(command != null)
-            return command.execute();
 
-        return messagesList;
+        return command.execute();
     }
 
     private Command createCommand(){
@@ -42,10 +40,8 @@ public class RequestProcessor {
         if(isStartCommand(message.text()))
             return commandFactory.createStartCommand(update);
 
-        if(!isValidCommand(message.text()))
-            return commandFactory.createrInvalidCommand(update);
+        return commandFactory.createrInvalidCommand(update);
 
-        return null;
     }
 
     private boolean setAndCheckMessageAndChat() {
@@ -71,7 +67,4 @@ public class RequestProcessor {
         return text.equals(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(0));
     }
 
-    private boolean isValidCommand(String text) {
-        return BotConfigs.INSTANCE.ACCEPTED_COMMANDS.contains(text);
-    }
 }

@@ -2,8 +2,6 @@ package it.unimi.di.sweng.eventfinderbot.webhook;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import it.unimi.di.sweng.eventfinderbot.webhook.BotConfigs;
-import it.unimi.di.sweng.eventfinderbot.webhook.Command;
 
 import java.util.ArrayList;
 import java.util.List;
