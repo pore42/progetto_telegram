@@ -12,23 +12,25 @@ import java.util.Date;
 /**
  * Created by Imran on 02/06/16.
  */
-public class RequestBuilder {
+public class RequestFactory {
     private Update update;
     private Message message;
     private Chat chat;
 
-    public RequestBuilder(Update update){
+    public RequestFactory(Update update){
         this.update = update;
     }
 
-    public Request createRequest(){
+    public Request createHereTodayRequest(){
+
         message = update.message();
         chat = message.chat();
+
+        if (message.location() == null)
+            return null;
+
         Date date = new Date(message.date());
-        if(message.location() != null){
-            Location location = new Location(message.location().latitude(), message.location().longitude());
-            return new RequestHereToday(chat.id(), location, date);
-        }
-        return null;
+        Location location = new Location(message.location().latitude(), message.location().longitude());
+        return new RequestHereToday(chat.id(), location, date);
     }
 }

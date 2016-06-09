@@ -43,8 +43,8 @@ public class RequestProcessor {
             addNewUser(message);
 
         if(IS_HERE_AND_NOW_COMMAND){
-            RequestBuilder requestBuilder = new RequestBuilder(update);
-            Request request = requestBuilder.createRequest();
+            RequestFactory requestFactory = new RequestFactory(update);
+            Request request = requestFactory.createHereTodayRequest();
 
             long chatId = request.getChatId();
 

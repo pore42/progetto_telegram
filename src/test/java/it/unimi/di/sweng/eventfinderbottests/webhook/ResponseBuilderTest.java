@@ -5,7 +5,7 @@ import com.pengrad.telegrambot.model.Location;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import it.unimi.di.sweng.eventfinderbot.model.RequestHereToday;
-import it.unimi.di.sweng.eventfinderbot.webhook.RequestBuilder;
+import it.unimi.di.sweng.eventfinderbot.webhook.RequestFactory;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -27,7 +27,7 @@ public class ResponseBuilderTest {
     @Test
     public void BuilderInstaceTest(){
         Update update = mock(Update.class);
-        RequestBuilder builder = new RequestBuilder(update);
+        RequestFactory builder = new RequestFactory(update);
         assertNotNull(builder);
     }
     @Test
@@ -45,8 +45,8 @@ public class ResponseBuilderTest {
         when(message.chat()).thenReturn(chat);
         when(update.message()).thenReturn(message);
 
-        RequestBuilder builder = new RequestBuilder(update);
-        RequestHereToday req = (RequestHereToday) builder.createRequest();
+        RequestFactory builder = new RequestFactory(update);
+        RequestHereToday req = (RequestHereToday) builder.createHereTodayRequest();
 
         assertEquals(location.latitude(), req.getLocation().getLatitude(), DELTA);
         assertEquals(location.longitude(), req.getLocation().getLongitude(), DELTA);
@@ -63,8 +63,8 @@ public class ResponseBuilderTest {
           when(message.location()).thenReturn(null);
           when(update.message()).thenReturn(message);
 
-          RequestBuilder builder = new RequestBuilder(update);
-          assertNull(builder.createRequest());
+          RequestFactory builder = new RequestFactory(update);
+          assertNull(builder.createHereTodayRequest());
          
     }
 }
