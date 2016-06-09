@@ -22,14 +22,10 @@ public class InvalidCommand extends Command {
         long chatId = update.message().chat().id();
         SendMessage invalidCommandMessage = new SendMessage(chatId, "Comando non valido");
         messagesList.add(invalidCommandMessage);
-        sendKeyboard(chatId);
+        
+        super.sendCommandsKeyboard(chatId);
 
         return messagesList;
     }
 
-    private void sendKeyboard(long chatId){
-        SendMessage keyboardMessage = new SendMessage(chatId, "Cosa vuoi fare?");
-        keyboardMessage.replyMarkup(BotConfigs.INSTANCE.KEYBOARD_BUTTONS);
-        messagesList.add(keyboardMessage);
-    }
 }

@@ -9,14 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RequestProcessor {
-    final private EventFinderBot eventFinderBot = EventFinderBot.instance();
 
-    private List<SendMessage> messagesList;
     final private Update update;
     private Message message;
     private Chat chat;
-
-    boolean IS_NEW_USER, IS_HERE_AND_NOW_COMMAND, IS_START_COMMAND,IS_VALID_COMMAND;
 
     public RequestProcessor(Update update) {
         this.update = update;
@@ -24,41 +20,32 @@ public class RequestProcessor {
 
     public List<SendMessage> process() {
 
-        messagesList = new ArrayList<>();
+        List<SendMessage> messagesList = new ArrayList<>();
 
         if (! setAndCheckMessageAndChat()) return messagesList;
 
-        setRequestType();
-
-        if(IS_NEW_USER)
+        if(EventFinderBot.instance().isNewUser(chat.id()))
             addNewUser(message);
 
-        if(IS_HERE_AND_NOW_COMMAND){
-            Command com = new HereTodayCommand(update);
-            return com.execute();
-        }
-
-        else if(IS_START_COMMAND){
-            Command com = new InvalidCommand(update);
-            return com.execute();
-        }
-
-        else if(!IS_VALID_COMMAND){
-            Command com = new InvalidCommand(update);
-            return com.execute();
-        }
+        Command command = createCommand();
+        if(command != null)
+            return command.execute();
 
         return messagesList;
     }
 
-    public void setRequestType(){
-        IS_NEW_USER = eventFinderBot.isNewUser(chat.id());
-        IS_HERE_AND_NOW_COMMAND = isHereAndNowCommand(message);
+    private Command createCommand(){
+        CommandFactory commandFactory = new CommandFactory();
+        if(isHereAndNowCommand(message))
+            return commandFactory.createHereTodayCommand(update);
 
-        if(!IS_HERE_AND_NOW_COMMAND){
-            IS_START_COMMAND = isStartCommand(message.text());
-            IS_VALID_COMMAND = isValidCommand(message.text());
-        }
+        if(isStartCommand(message.text()))
+            return commandFactory.createStartCommand(update);
+
+        if(!isValidCommand(message.text()))
+            return commandFactory.createrInvalidCommand(update);
+
+        return null;
     }
 
     private boolean setAndCheckMessageAndChat() {
@@ -66,14 +53,14 @@ public class RequestProcessor {
             message = update.message();
             chat = message.chat();
         }catch(NullPointerException npe){
-            System.out.println("Received invalid update, message == null");
+            System.err.print(npe.getMessage());
             return false;
         }
         return true;
     }
 
     private void addNewUser(Message message) {
-        eventFinderBot.addNewUser(message.chat().id());
+        EventFinderBot.instance().addNewUser(message.chat().id());
     }
 
     private boolean isHereAndNowCommand(Message message) {
