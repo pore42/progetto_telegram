@@ -96,11 +96,11 @@ public class RequestProcessor {
     }
 
     private boolean isStartCommand(String text) {
-        return text.equals(BotConfigs.INSTANCE.ACCEPTED_COMMMANDS.get(0));
+        return text.equals(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(0));
     }
 
     private boolean isValidCommand(String text) {
-        return BotConfigs.INSTANCE.ACCEPTED_COMMMANDS.contains(text);
+        return BotConfigs.INSTANCE.ACCEPTED_COMMANDS.contains(text);
     }
     private void sendWelcomeMessage(Chat chat){
         SendMessage welcomeMessage = new SendMessage(chat.id(), "Benvenuto "+chat.firstName());
