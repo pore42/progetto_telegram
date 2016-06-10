@@ -9,4 +9,4 @@ after_script:
   - cp -rv build/test-results shippable/testresults
   - if [ -r build/reports/jacoco/test/jacocoTestReport.xml ]; then python cover2cover.py build/reports/jacoco/test/jacocoTestReport.xml src/main/java > shippable/codecoverage/coverage.xml; fi
 env:
-  - EBAPI_TOKEN=FH4JPTU355DOUA4QJAWJ
+  - secure: lMJ3UcXgqbMw55xRbg8xKBdGA3zB9EEYjj1jbHGJf7pBNTvmFDZMQmEnMUKGrXz6x7JbcGNl175uBySzHgMMDAB9EW/K1vJhxcdq2WIAfCkYY3rGLOGW9g6iv/Y8rVNZB7MQXfKID9g7uDnkhxOLXNDqO19GidVAOKmceDwUm5D5tpLWss5eNZz3Cu0hRYGwoOW57zAZg7BXl9kAzwdCd+14eyQALZL5aU5iZay1NMH1YpkRuYM1ZJBgcNL3MTmnfKVhd4bYj2I1t/L3GTgz13r/JNZyu2rUigvjS4UyZuayml2xB7mvrnUZSwSeWE3lPDkmHViZaTW+nOnAsWLQ/g==
