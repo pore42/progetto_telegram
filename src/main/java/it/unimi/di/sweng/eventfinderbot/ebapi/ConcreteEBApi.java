@@ -53,6 +53,21 @@ public class ConcreteEBApi implements IEbApi {
         
         return events.subList(0, events.size() < Configs.INSTANCE.EBAPI_LIMIT() ? events.size() : Configs.INSTANCE.EBAPI_LIMIT());
     }
+	
+	@Override
+	public List<Event> getEvents(String city, Date date)
+	{
+		String requestUrl = createUrl(city, date);
+		
+		final GetEventsResource ge = getClientResource(requestUrl);
+		EBApiResponse response = ge.getEvents();
+		List<Event> events = response.getEvents();
+		
+		return events.subList(0, events.size() < Configs.INSTANCE.EBAPI_LIMIT() ? events.size() : Configs.INSTANCE.EBAPI_LIMIT());
+				
+	}
+	
+	
 
 	private GetEventsResource getClientResource(String requestUrl) {
 		final GetEventsResource ge;
@@ -83,13 +98,20 @@ public class ConcreteEBApi implements IEbApi {
 		return endPoint +  arguments + token;
 	}
 
+	private String createUrl(String city, Date date) 
+	{
+		String token = "&token=" + Configs.INSTANCE.EBAPI_TOKEN();
+		String dateString = getStringDate(date);
+		String endPoint = "/events/search/";
+		String arguments = "?venue.city=" + city +
+	                       "&start_date.range_start=" + dateString +
+	                       "&sort_by=" + Configs.INSTANCE.EBAPI_SORT();
+			return endPoint +  arguments + token;
+		
+	}
 
 
 
-    @Override
-    public List<Event> getEvents(String city, Date date) {
-        return null;
-    }
 
     @Override
     public Event getEventById(String id) {
