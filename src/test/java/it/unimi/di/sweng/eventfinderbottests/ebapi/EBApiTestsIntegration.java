@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
-public class EBApiTests {
+public class EBApiTestsIntegration {
 
     @Test
     public void testSize() {
