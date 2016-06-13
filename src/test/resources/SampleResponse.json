@@ -1,0 +1,170 @@
+{
+    "pagination": {
+        "object_count": 247673, 
+        "page_number": 1, 
+        "page_size": 50, 
+        "page_count": 500
+    }, 
+    "events": [
+        {
+            "name": {
+                "text": "Festa di fine scuola", 
+                "html": "Festa di fine scuola"
+            }, 
+            "description": {
+                "text": "\nfiesta in un parco\n", 
+                "html": " fiestapowa "
+            }, 
+            "id": "1", 
+            "url": "http://www.eventbrite.com/e/fiestadifinescuola", 
+            "vanity_url": "http://1145onfriday.eventbrite.com", 
+            "start": {
+                "timezone": "America/New_York", 
+                "local": "2016-06-10T21:30:00", 
+                "utc": "2016-06-11T02:00:00Z"
+            }, 
+            "end": {
+                "timezone": "America/New_York", 
+                "local": "2016-06-11T05:00:00", 
+                "utc": "2016-06-11T07:00:00Z"
+            }, 
+            "created": "2013-01-01T01:00:00Z", 
+            "changed": "2016-06-05T09:35:33Z", 
+            "capacity": 309999, 
+            "status": "live", 
+            "currency": "USD", 
+            "listed": true, 
+            "shareable": true, 
+            "online_event": false, 
+            "tx_time_limit": 480, 
+            "hide_start_date": false, 
+            "hide_end_date": false, 
+            "locale": "en_US", 
+            "is_locked": false, 
+            "privacy_setting": "unlocked", 
+            "is_series": false, 
+            "is_series_parent": false, 
+            "is_reserved_seating": false, 
+            "logo_id": "21434007", 
+            "organizer_id": "4497001187", 
+            "venue_id": "1001", 
+            "category_id": "110", 
+            "subcategory_id": "10004", 
+            "format_id": "11", 
+            "resource_uri": "https://www.eventbriteapi.com/v3/events/1/", 
+            "logo": {
+                "id": "21434007", 
+                "url": "https://img.evbuc.com/http%3A%2F%2Fcdn.evbuc.com%2Fimages%2F21434007%2F68193446877%2F1%2Foriginal.jpeg?h=200&w=450&s=e43d19550377fea6b1075c9dd654c34c", 
+                "aspect_ratio": "1", 
+                "edge_color": "#3c2b35", 
+                "edge_color_set": true
+            }
+        }, 
+        {
+            "name": {
+                "text": "Dinosaurs: Unextinct", 
+                "html": "Dinosaurs: Unextinct at the L.A. Zoo! April \u2013 October, 2016"
+            }, 
+            "description": {
+                "text": "Dinosaurs: Unextinct",
+                "html": "<P><IMG ALT=\"Dinosaurs: Unextinct at the L.A. Zoo logo\" SRC=\"https://cdn.evbuc.com/eventlogos/159151266/lazoodinosaurslogoforwhitebackgrounds450px.png\"><\/P>\r\n<H2><BR><\/H2>\r\n<H2>17 Life-Size, Life-Like Dinosaurs at the L.A. Zoo<\/H2>\r\n<P><STRONG>See them before they extinct again!<\/STRONG><\/P>\r\n<P><EM>Purchase tickets today and use them ANY TIME between April 15 and October 31, 2016. <I><SPAN>Entry to this exhibit requires a <\/SPAN><\/I><\/EM><SPAN>Dinosaurs: Unextinct at the L.A. Zoo<I> ticket plus Zoo admission or GLAZA membership.\u00a0<\/I><\/SPAN><EM>See below for details.<\/EM><\/P>\r\n<P CLASS=\"MsoNormal\"><STRONG>About:\u00a0<\/STRONG>Explore a previously off-limits part of the Zoo, now home to\u00a0moving, roaring, snarling, claw-bearing dinosaurs \u201cbrought back to life\u201d for a limited time. Along the way, unlock special content and 3D animations through a custom app (available for iPhone and Android devices soon), indulge your inner paleontologist by joining a fossil dig, and learn how the mighty creatures of the Mesozoic era compare with animals of today.<\/P>\r\n<P CLASS=\"MsoNormal\"><STRONG>Time<\/STRONG>: Open daily at 10 a.m. Last entry at 4 p.m.<\/P>\r\n<P CLASS=\"MsoNormal\"><STRONG>Valid Dates<\/STRONG><SPAN>:\u00a0<\/SPAN><SPAN>Your ticket is valid for one-time entry to the exhibit, Monday through Sunday, from the date of purchase through the exhibit\u2019s closing day of October 31, 2016 (subject to capacity). Tickets are not valid after closing day. No refunds will be issued for unused tickets.<\/SPAN><\/P>\r\n<P CLASS=\"MsoNormal\"><STRONG>Refund and Exchange Policy<\/STRONG>:\u00a0<SPAN>The exhibit is open rain or shine. No rain checks will be issued. No reentry.<\/SPAN><\/P>\r\n<P CLASS=\"MsoNormal\"><STRONG>Zoo Admission<\/STRONG>:\u00a0<EM>Dinosaurs:\u00a0<\/EM><I>Unextinct at the L.A. Zoo<\/I> is a separately ticketed exhibit inside the Zoo. General admission tickets to the Los Angeles Zoo or GLAZA membership are still required. Tickets to the Zoo can be purchased online at the <A TITLE=\"L.A. Zoo Admissions Tickets\" HREF=\"https://tickets.lazoo.org/webstore/shop/ViewItems.aspx?Merchant=LAZOO&CategoryGroupExternalID=tkts&CategoryExternalID=TKTS\" TARGET=\"_blank\" REL=\"nofollow\">L.A. Zoo website<\/A>.<\/P>\r\n<P CLASS=\"MsoNormal\">By registering for this event, you agree to receive information and email communications from the Greater Los Angeles Zoo Association for this ticket purchase as well as future L.A. Zoo news and events.<\/P>\r\n<H3 CLASS=\"MsoNormal\"><STRONG>For more information, go to<I>\u00a0<A TITLE=\"L.A. Zoo Dinosaurs exhibit webpage\" HREF=\"http://www.lazoo.org/dinos\" TARGET=\"_blank\" REL=\"nofollow\">www.lazoo.org/dinos<\/A><\/I><\/STRONG><\/H3>\r\n<P><STRONG><I>***<\/I><\/STRONG><\/P>"
+            }, 
+            "id": "2", 
+            "url": "http://www.eventbrite.com/e/dinosaurs-unextinct", 
+            "start": {
+                "timezone": "America/Los_Angeles", 
+                "local": "2016-04-15T10:00:00", 
+                "utc": "2016-04-15T17:00:00Z"
+            }, 
+            "end": {
+                "timezone": "America/Los_Angeles", 
+                "local": "2016-10-31T15:59:00", 
+                "utc": "2016-10-31T22:59:00Z"
+            }, 
+            "created": "2016-03-05T00:37:29Z", 
+            "changed": "2016-06-10T07:18:56Z", 
+            "capacity": 260000, 
+            "status": "started", 
+            "currency": "USD", 
+            "listed": true, 
+            "shareable": true, 
+            "online_event": false, 
+            "tx_time_limit": 900, 
+            "hide_start_date": false, 
+            "hide_end_date": false, 
+            "locale": "en_US", 
+            "is_locked": false, 
+            "privacy_setting": "unlocked", 
+            "is_series": false, 
+            "is_series_parent": false, 
+            "is_reserved_seating": false, 
+            "logo_id": "19804360", 
+            "organizer_id": "7609944315", 
+            "venue_id": "10837248", 
+            "category_id": "115", 
+            "subcategory_id": "15999", 
+            "format_id": "17", 
+            "resource_uri": "https://www.eventbriteapi.com/v3/events/22592779612/", 
+            "logo": {
+                "id": "19804360", 
+                "url": "https://img.evbuc.com/http%3A%2F%2Fcdn.evbuc.com%2Fimages%2F19804360%2F120698030119%2F1%2Foriginal.jpg?h=200&w=450&rect=0%2C0%2C2160%2C1080&s=54a096da77dae0f9cf44bd19ebad30b2", 
+                "aspect_ratio": "2", 
+                "edge_color": "#95c630", 
+                "edge_color_set": true
+            }
+        }, 
+        {
+            "name": {
+                "text": "Safeway Open 2016", 
+                "html": "Safeway Open 2016"
+            }, 
+            "description": {
+                "text": "The PGA TOUR returns to Silverado Resort and Spa in Napa, California!", 
+                "html": "<P CLASS=\"MsoNormal\"><SPAN>The PGA TOUR returns to Silverado Resort and Spa in Napa, California! \u00a0<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN><STRONG>Just Announced: LIVE MUSIC AFTER GOLF<\/STRONG> \u2013 Admission is included with your golf ticket.<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN><EM><STRONG>X AMBASSADORS<\/STRONG><\/EM> \u2013 Thursday, October 13<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN><EM><STRONG>CHARLES KELLEY<\/STRONG><\/EM> \u2013 Friday, October 14<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN><EM><STRONG>CAPITAL CITIES<\/STRONG><\/EM> \u2013 Saturday, October 15<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN>(listen to each band at <A TARGET=\"_blank\" HREF=\"http://www.safewayopen.com/fan-experience.html\" REL=\"nofollow\">www.safewayopen.com/fanexperience<\/A>)<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN>Admission to the following on-course venues is also included in the cost of each ticket <\/SPAN><A TARGET=\"_blank\" HREF=\"http://www.safewayopen.com/\" REL=\"nofollow\"><SPAN>(more details at SafewayOpen.com)<\/SPAN><\/A><SPAN><\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><STRONG>SAFEWAY FOOD &amp; WINE PAVILION<\/STRONG><SPAN><\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN>Over 27,000 square feet of Food and Wine! Enjoy lunch in this giant air conditioned tent, or take your meal outside to one of two viewing decks to watch golf and soak up the sun. This venue will feature the Safeway Culinary Experience, Starbucks and world-renowned chefs Thomas Keller, Masaharu Morimoto and Charlie Palmer all with no cover charge! Pair your meal with a glass of wine, a tasting flight or a beverage from the 360-degree sports bar!<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><STRONG>BEER FORE BIRDIES by MICHELOB ULTRA<\/STRONG><SPAN><\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN>It\u2019s happy hour on the golf course! Located on the par-5 16th green, Beer for Birdies features discounted beer every time a player makes birdie or eagle on that hole\u2026 all day\u2026every day. Cheers!<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><STRONG>SPIRITS LOUNGE<\/STRONG><SPAN><\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN>In the mood for a specialty cocktail? Watch your favorite players from the 17th hole greenside lounge and enjoy unique concoctions featuring over 10 different spirits brands.<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><STRONG>THE BREW LOFT<\/STRONG><SPAN><\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN>We brought the brewery to the golf course! Choose from more than a dozen beers on tap while you sit greenside on the exciting par-3 11th hole.<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><STRONG>FOOD<\/STRONG><SPAN> - Visit the <I>SAFEWAY FOOD &amp; WINE PAVILION<\/I> featuring gourmet food and world-renowned chefs including <I>THOMAS KELLER, MASAHARU MORIMOTO, CHARLIE PALMER<\/I>, the Safeway Culinary Experience, and Starbucks. Other food options include Ca\u2019momi Pizza, Compadres Rio Grille, Silverado Burger Dogs, Kara\u2019s Cupcakes and Three Twins Ice Cream.<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><STRONG>BEER, WINE and SPIRITS<\/STRONG><SPAN> - Thirsty? Buy a glass or enjoy a tasting flight from <I>60+ premium beer, wine, and spirit brands<\/I>! See the list at SafewayOpen.com<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><STRONG>MUSIC<\/STRONG><SPAN> - Live music after golf featuring X Ambassadors, Charles Kelley and Capital Cities!<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><STRONG>GOLF<\/STRONG><SPAN> - The Safeway Open is the first event of the 2016-2017 PGA TOUR FedExCup schedule, October 12-16, 2016, and will host many of the top PGA TOUR players in the world.<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN><STRONG>15 and Under Free Admissio<\/STRONG>n - <\/SPAN><SPAN>Free admission for kids 15 and under when accompanied by a paid adult.<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN><STRONG>Safeway $10 Off Coupon<\/STRONG> -<\/SPAN><SPAN> All ticket purchasers will receive a Safeway $10 off coupon valid in Safeway stores.<\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><SPAN>Tournament proceeds benefit the Safeway Foundation and local charities<\/SPAN><SPAN>. <\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><I><SPAN>Safeway is offering<\/SPAN><\/I><I><SPAN> special savings of up to 50% to their ClubCard and Just for U shoppers. Just type in the promocode to receive your discount. (More info at www.<\/SPAN><\/I><A TARGET=\"_blank\" HREF=\"http://www.safeway.com/\" REL=\"nofollow\"><I><SPAN>Safewayopoen.com<\/SPAN><\/I><\/A><I><SPAN>)<\/SPAN><\/I><SPAN><\/SPAN><\/P>\n<P CLASS=\"MsoNormal\"><STRONG><I>NO RE-ENTRY | NO RAIN CHECK PRIVILEGES | NO REFUNDS OR EXCHANGES<\/I><\/STRONG><SPAN><\/SPAN><\/P>"
+            }, 
+            "id": "3", 
+            "url": "http://www.eventbrite.com/e/safeway-open-2016", 
+            "start": {
+                "timezone": "America/Los_Angeles", 
+                "local": "2016-10-12T07:00:00", 
+                "utc": "2016-10-12T14:00:00Z"
+            }, 
+            "end": {
+                "timezone": "America/Los_Angeles", 
+                "local": "2016-10-16T17:00:00", 
+                "utc": "2016-10-17T00:00:00Z"
+            }, 
+            "created": "2016-02-01T19:57:39Z", 
+            "changed": "2016-06-10T03:18:58Z", 
+            "capacity": 175000, 
+            "status": "live", 
+            "currency": "USD", 
+            "listed": true, 
+            "shareable": true, 
+            "online_event": false, 
+            "tx_time_limit": 480, 
+            "hide_start_date": false, 
+            "hide_end_date": false, 
+            "locale": "en_US", 
+            "is_locked": false, 
+            "privacy_setting": "unlocked", 
+            "is_series": false, 
+            "is_series_parent": false, 
+            "is_reserved_seating": false, 
+            "logo_id": "18416302", 
+            "organizer_id": "9734332662", 
+            "venue_id": "13017616", 
+            "category_id": "108", 
+            "subcategory_id": "8010", 
+            "format_id": "14", 
+            "resource_uri": "https://www.eventbriteapi.com/v3/events/21233186031/", 
+            "logo": {
+                "id": "18416302", 
+                "url": "https://img.evbuc.com/http%3A%2F%2Fcdn.evbuc.com%2Fimages%2F18416302%2F164652832925%2F1%2Foriginal.jpg?h=200&w=450&rect=1805%2C1910%2C2922%2C1461&s=7a05cc10838bd8e6a60a317ac406a588", 
+                "aspect_ratio": "2", 
+                "edge_color": "#9fb4a2", 
+                "edge_color_set": true
+            }
+        } 
+       ]
+}
