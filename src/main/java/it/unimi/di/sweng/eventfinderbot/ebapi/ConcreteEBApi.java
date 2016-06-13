@@ -18,54 +18,73 @@ public class ConcreteEBApi implements IEbApi {
 
 	private String url;
 
-	public ConcreteEBApi(String url)
-    {
+	public ConcreteEBApi() {
+		this(Configs.INSTANCE.EBAPI_ENDPOINT());
+	}
+
+	public ConcreteEBApi(String url){
     	this.url = url;
     }
 	
 
-	public ConcreteEBApi() {
-		this.url = Configs.INSTANCE.EBAPI_ENDPOINT();
-	}
 
+	private GetEventsResource setupClientHttp(String requestUrl){
+		final GetEventsResource ge = ClientResource.create(url + requestUrl, GetEventsResource.class);
+		return ge;
+	}
+	
+	private GetEventsResource setupClientHttps(String requestUrl) {
+		final Client client = new Client(new Context(), Protocol.HTTPS);
+		final ClientResource cr = new ClientResource(url + requestUrl);
+		cr.setNext(client);
+		final GetEventsResource ge = cr.wrap(GetEventsResource.class);
+		return ge;
+	}
 
 
 	@Override
     public List<Event> getEvents(Location location, Date date) {
 
-        String postfix = "&token=" + Configs.INSTANCE.EBAPI_TOKEN();
-        TimeZone tz = TimeZone.getTimeZone("UTC");
-        DateFormat df = new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss");
-        df.setTimeZone(tz);
-        String endPoint = "/events/search/?location.latitude=" + location.getLatitude() +
-                          "&location.longitude=" + location.getLongitude() +
-                          "&start_date.range_start=" + df.format(date) +
-                          "&sort_by=" + Configs.INSTANCE.EBAPI_SORT();
+		String requestUrl = createUrl(location, date);
 
-        final GetEventsResource ge;
-        if(url.contains("https")) 
-        	ge = setupClientHttps(endPoint, postfix);
-        else
-        	ge = setupClientHttp(endPoint, postfix);
-
+        final GetEventsResource ge = getClientResource(requestUrl);
         EBApiResponse response = ge.getEvents();
         List<Event> events = response.getEvents();
+        
         return events.subList(0, events.size() < Configs.INSTANCE.EBAPI_LIMIT() ? events.size() : Configs.INSTANCE.EBAPI_LIMIT());
     }
 
-
-	private GetEventsResource setupClientHttp(String endpoint, String posfix){
-		final GetEventsResource ge = ClientResource.create(url + endpoint + posfix, GetEventsResource.class);
+	private GetEventsResource getClientResource(String requestUrl) {
+		final GetEventsResource ge;
+        if(url.contains("https")) 
+        	ge = setupClientHttps(requestUrl);
+        else
+        	ge = setupClientHttp(requestUrl);
 		return ge;
+	}
+
+	private String getStringDate(Date date) {
+		TimeZone tz = TimeZone.getTimeZone("UTC");
+		DateFormat df = new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss");
+		df.setTimeZone(tz);
+		String dateString = df.format(date);
+		return dateString;
 	}
 	
-	private GetEventsResource setupClientHttps(String endPoint, String postfix) {
-		final Client client = new Client(new Context(), Protocol.HTTPS);
-        final ClientResource cr = new ClientResource(url + endPoint + postfix);
-        cr.setNext(client);
-        final GetEventsResource ge = cr.wrap(GetEventsResource.class);
-		return ge;
+	private String createUrl(Location location, Date date) {
+
+        String token = "&token=" + Configs.INSTANCE.EBAPI_TOKEN();
+		String dateString = getStringDate(date);
+		String endPoint = "/events/search/";
+		String arguments = "?location.latitude=" + location.getLatitude() +
+                          "&location.longitude=" + location.getLongitude() +
+                          "&start_date.range_start=" + dateString +
+                          "&sort_by=" + Configs.INSTANCE.EBAPI_SORT();
+		return endPoint +  arguments + token;
 	}
+
+
+
 
     @Override
     public List<Event> getEvents(String city, Date date) {
