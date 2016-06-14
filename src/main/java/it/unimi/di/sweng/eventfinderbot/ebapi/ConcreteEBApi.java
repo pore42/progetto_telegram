@@ -27,11 +27,6 @@ public class ConcreteEBApi implements IEbApi {
     }
 	
 
-
-	private GetEventsResource setupClientHttp(String requestUrl){
-		final GetEventsResource ge = ClientResource.create(url + requestUrl, GetEventsResource.class);
-		return ge;
-	}
 	
 	private GetEventsResource setupClientHttps(String requestUrl) {
 		final Client client = new Client(new Context(), Protocol.HTTPS);
@@ -47,7 +42,7 @@ public class ConcreteEBApi implements IEbApi {
 
 		String requestUrl = createUrl(location, date);
 
-        final GetEventsResource ge = getClientResource(requestUrl);
+        final GetEventsResource ge = setupClientHttps(requestUrl);
         EBApiResponse response = ge.getEvents();
         List<Event> events = response.getEvents();
         
@@ -59,7 +54,7 @@ public class ConcreteEBApi implements IEbApi {
 	{
 		String requestUrl = createUrl(city, date);
 		
-		final GetEventsResource ge = getClientResource(requestUrl);
+		final GetEventsResource ge = setupClientHttps(requestUrl);
 		EBApiResponse response = ge.getEvents();
 		List<Event> events = response.getEvents();
 		
@@ -69,14 +64,6 @@ public class ConcreteEBApi implements IEbApi {
 	
 	
 
-	private GetEventsResource getClientResource(String requestUrl) {
-		final GetEventsResource ge;
-        if(url.contains("https")) 
-        	ge = setupClientHttps(requestUrl);
-        else
-        	ge = setupClientHttp(requestUrl);
-		return ge;
-	}
 
 	private String getStringDate(Date date) {
 		TimeZone tz = TimeZone.getTimeZone("UTC");
