@@ -161,7 +161,7 @@ public class EBApiTestsUnit {
        	thrown.expect(EventNotFoundException.class);
        	thrown.expectMessage(id);
            IEbApi api = new ConcreteEBApi("http://localhost:8080");
-           Event event = api.getEventById(id);
+           api.getEventById(id);
    	}  
     
     @Test

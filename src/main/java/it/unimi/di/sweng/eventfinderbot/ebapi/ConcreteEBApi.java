@@ -8,7 +8,6 @@ import org.restlet.Context;
 import org.restlet.data.Protocol;
 import org.restlet.data.Status;
 import org.restlet.resource.ClientResource;
-import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
 
 import java.text.DateFormat;
