@@ -1,11 +1,14 @@
 package it.unimi.di.sweng.eventfinderbottests.ebapi;
 
 import it.unimi.di.sweng.eventfinderbot.ebapi.ConcreteEBApi;
+import it.unimi.di.sweng.eventfinderbot.ebapi.EventNotFoundException;
+import it.unimi.di.sweng.eventfinderbot.ebapi.IEbApi;
 import it.unimi.di.sweng.eventfinderbot.model.Event;
 import it.unimi.di.sweng.eventfinderbot.model.Location;
 
 import org.junit.*;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.restlet.data.Method;
 
 import java.io.BufferedReader;
@@ -143,14 +146,43 @@ public class EBApiTestsUnit {
         assertEquals("http://www.eventbrite.com/e/safeway-open-2016", ev2.getUrl());
         assertEquals(3, Integer.parseInt(ev2.getId()));
         assertEquals("2016-10-12T07:00:00", ev2.getStart());
-        
-        
-    	
-
     	
 	}
     
+
+       
+       @Rule
+       public ExpectedException thrown = ExpectedException.none();
+       
+       @Test
+   	public void testGetEventByIdThrowsEventNotFoundException() throws Exception {
+    	   
+       	String id = "-1";
+       	thrown.expect(EventNotFoundException.class);
+       	thrown.expectMessage(id);
+           IEbApi api = new ConcreteEBApi("http://localhost:8080");
+           Event event = api.getEventById(id);
+   	}  
     
+    @Test
+	public void testGetEventById() throws Exception 
+    {
+    	String id = "1";
+    	json= readFromFile("SampleResponseById.json");
+        
+    	server.setReply(Method.GET, "/events/" + id + "/", json);
+    	
+    	ConcreteEBApi client = new ConcreteEBApi("http://localhost:8080");
+    	
+        Event ev0= client.getEventById(id);
+        
+        assertEquals("Festa di fine scuola", ev0.getName());
+        assertEquals("\nfiesta in un parco\n", ev0.getDescription());
+        assertEquals("http://www.eventbrite.com/e/fiestadifinescuola", ev0.getUrl());
+        assertEquals(1, Integer.parseInt(ev0.getId()));
+        assertEquals("2016-06-10T21:30:00", ev0.getStart());
+
+	}
     
     
     

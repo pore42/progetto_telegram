@@ -6,7 +6,10 @@ import it.unimi.di.sweng.eventfinderbot.model.Location;
 import org.restlet.Client;
 import org.restlet.Context;
 import org.restlet.data.Protocol;
+import org.restlet.data.Status;
 import org.restlet.resource.ClientResource;
+import org.restlet.resource.Get;
+import org.restlet.resource.ResourceException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,12 +31,11 @@ public class ConcreteEBApi implements IEbApi {
 	
 
 	
-	private GetEventsResource setupClientHttps(String requestUrl) {
+	private ClientResource setupClientHttps(String requestUrl) {
 		final Client client = new Client(new Context(), Protocol.HTTPS);
 		final ClientResource cr = new ClientResource(url + requestUrl);
 		cr.setNext(client);
-		final GetEventsResource ge = cr.wrap(GetEventsResource.class);
-		return ge;
+		return cr;
 	}
 
 
@@ -42,7 +44,7 @@ public class ConcreteEBApi implements IEbApi {
 
 		String requestUrl = createUrl(location, date);
 
-        final GetEventsResource ge = setupClientHttps(requestUrl);
+        final GetEventsResource ge = setupClientHttps(requestUrl).wrap(GetEventsResource.class);
         EBApiResponse response = ge.getEvents();
         List<Event> events = response.getEvents();
         
@@ -54,7 +56,7 @@ public class ConcreteEBApi implements IEbApi {
 	{
 		String requestUrl = createUrl(city, date);
 		
-		final GetEventsResource ge = setupClientHttps(requestUrl);
+		final GetEventsResource ge = setupClientHttps(requestUrl).wrap(GetEventsResource.class);
 		EBApiResponse response = ge.getEvents();
 		List<Event> events = response.getEvents();
 		
@@ -100,8 +102,19 @@ public class ConcreteEBApi implements IEbApi {
 
 
 
-    @Override
-    public Event getEventById(String id) {
-        return null;
-    }
+	@Override
+	public Event getEventById(String id) {
+		Event event = null;
+		String requestUrl = "/events/" + id + "/?token=" + Configs.INSTANCE.EBAPI_TOKEN();
+		
+		
+		final GetEventByIdResource ge = setupClientHttps(requestUrl).wrap(GetEventByIdResource.class);
+		try {
+			event = ge.getEventById(id);
+		} catch (ResourceException e) {
+			if (e.getStatus().equals(Status.CLIENT_ERROR_NOT_FOUND))
+				throw new EventNotFoundException("Event with id " + id + " not found");
+		}
+		return event;
+	}
 }
