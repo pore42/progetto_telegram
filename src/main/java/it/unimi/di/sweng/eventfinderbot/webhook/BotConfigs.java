@@ -11,12 +11,13 @@ public enum BotConfigs {
     INSTANCE;
 
     public final Keyboard KEYBOARD_BUTTONS;
-    public final List<String> ACCEPTED_COMMMANDS;
+    public final List<String> ACCEPTED_COMMANDS;
 
-    private BotConfigs() {
+    BotConfigs() {
 
-        ACCEPTED_COMMMANDS = new ArrayList<String>();
-        ACCEPTED_COMMMANDS.add("/start");
+        ACCEPTED_COMMANDS = new ArrayList<>();
+        ACCEPTED_COMMANDS.add("/start");
+        ACCEPTED_COMMANDS.add("/details");
 
         KEYBOARD_BUTTONS = new ReplyKeyboardMarkup(
                 new KeyboardButton[]{

@@ -8,11 +8,14 @@ import it.unimi.di.sweng.eventfinderbot.ebapi.IEbApi;
 import it.unimi.di.sweng.eventfinderbot.model.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.powermock.api.support.membermodification.MemberModifier;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -71,5 +74,48 @@ public class TestConcierge {
         Concierge concierge = (Concierge) factory.instance();
 
         concierge.execute(null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testDetails1() {
+
+        ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
+        Concierge concierge = (Concierge) factory.instance();
+
+        RequestDetails request = new RequestDetails(
+
+                123456,
+                0
+        );
+
+        assertEquals(Response.ResponseType.EVENT_DETAILS, concierge.execute(request).getType());
+    }
+
+    @Test
+    public void testDetails2() throws IllegalAccessException {
+
+        ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
+        Concierge concierge = (Concierge) factory.instance();
+
+        RequestDetails request = new RequestDetails(
+
+                123456,
+                0
+        );
+
+        List<Event> events = new ArrayList<Event>();
+        Event event = mock(Event.class);
+        when(event.getId()).thenReturn("1234212");
+        when(event.getName()).thenReturn("Concerto Verdi");
+        when(event.getDescription()).thenReturn("VIVA Verdi");
+        when(event.getStart()).thenReturn("2016-06-11T03:00:00");
+        events.add(event);
+        Response response = new Response(events, Response.ResponseType.EVENT_DETAILS, request.getChatId());
+
+        MemberModifier.field(Concierge.class, "lastResponse").set(concierge, response);
+
+        Response actualResponse = concierge.execute(request);
+        assertEquals(Response.ResponseType.EVENT_DETAILS, actualResponse.getType());
+        assertEquals(1, actualResponse.getContent().size());
     }
 }
