@@ -38,11 +38,15 @@ public class DetailsCommand extends Command {
 
                 Event event = events.get(0);
 
-                String headerMessage = "*Dettagli evento*";
-                super.addHeadermessage(chatId, headerMessage);
+                String shortDesc = "";
+                if(event.getDescription().length() < 100 )
+                    shortDesc = event.getDescription();
+                else
+                    shortDesc = event.getDescription().substring(0, 100);
 
-                detailsMessage += "Nome: " + event.getName() + "\n" +
-                        "Descrizione: " + event.getDescription() + "\n" +
+                detailsMessage = "Dettagli evento\n" +
+                        "Nome: " + event.getName() + "\n" +
+                        "Descrizione: " + shortDesc +"\n" +
                         "Inizio: " + event.getStart() + "\n" +
                         "Url: " + event.getUrl();
 

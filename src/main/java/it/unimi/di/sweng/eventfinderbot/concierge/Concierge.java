@@ -18,30 +18,27 @@ public class Concierge implements IConcierge {
     @Override
     public Response execute(Request request) {
 
-        Response current = null;
-
         if (request instanceof RequestHereToday) {
 
             Date userDate = ((RequestHereToday) request).getToday();
             Location location = ((RequestHereToday) request).getLocation();
 			List<Event> content = EBApiStaticWrapper.getEvents(location, userDate);
 
-            current = new Response(content, Response.ResponseType.HERE_AND_NOW, request.getChatId());
+            Response current = new Response(content, Response.ResponseType.HERE_AND_NOW, request.getChatId());
+            lastResponse = current;
+            return current;
         }
 		else if (request instanceof RequestDetails) {
 
 			try {
 				Event event = lastResponse.getContent().get(((RequestDetails) request).getIndex());
-				current = new Response(Arrays.asList(event), Response.ResponseType.EVENT_DETAILS, request.getChatId());
+				return new Response(Arrays.asList(event), Response.ResponseType.EVENT_DETAILS, request.getChatId());
 			}
 			catch (Exception e) {
 				throw new IllegalStateException();
 			}
 		}
 
-        if (current == null) throw new IllegalStateException();
-
-        lastResponse = current;
-        return lastResponse;
+        throw new IllegalStateException();
     }
 }

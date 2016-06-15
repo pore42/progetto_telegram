@@ -32,12 +32,16 @@ public class BotResource extends ServerResource {
     private void processMessage(Update update) {
 
         final TelegramBot bot = TelegramBotAdapter.build(Configs.INSTANCE.BOT_TOKEN);
+        try {
+            RequestProcessor requestProcessor = new RequestProcessor(update);
 
-        RequestProcessor requestProcessor = new RequestProcessor(update);
+            List<SendMessage> messagesList = requestProcessor.process();
+            for (SendMessage toSend : messagesList)
+                bot.execute(toSend);
+        }catch(IllegalStateException ise){
+            getLogger().warning("BOT_RESOURCE: /details command with last response null");
+        }
 
-        List<SendMessage> messagesList = requestProcessor.process();
-        for (SendMessage toSend : messagesList)
-            bot.execute(toSend);
     }
 
     private boolean isServerTokenValid(){
