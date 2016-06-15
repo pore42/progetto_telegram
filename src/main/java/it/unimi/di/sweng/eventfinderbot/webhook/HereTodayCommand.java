@@ -36,10 +36,14 @@ public class HereTodayCommand extends Command {
             String headerMessage = "*Eventi in programma oggi nei tuoi dintorni*";
             super.addHeadermessage(chatId, headerMessage);
 
+            int eventIndex = 0;
             for (Event event : events) {
-                eventName = event.getName();
+                eventName = event.getName() + "\n";
+                eventName += BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(1) + eventIndex;
                 eventMessage = new SendMessage(chatId, eventName);
                 messagesList.add(eventMessage);
+
+                eventIndex++;
             }
         }else{
             String headerMessage = "*Non ho trovato eventi oggi nei tuoi dintorni*";

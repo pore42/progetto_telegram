@@ -40,8 +40,10 @@ public class RequestProcessor {
         if(isStartCommand(message.text()))
             return commandFactory.createStartCommand(update);
 
+        if(isDetailsCommand(message.text())) {
+            return commandFactory.createDetailsCommad(update);
+        }
         return commandFactory.createrInvalidCommand(update);
-
     }
 
     private boolean setAndCheckMessageAndChat() {
@@ -66,5 +68,10 @@ public class RequestProcessor {
     private boolean isStartCommand(String text) {
         return text.equals(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(0));
     }
+
+    private boolean isDetailsCommand(String text) {
+        return text.contains(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(1));
+    }
+
 
 }

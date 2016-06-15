@@ -5,6 +5,7 @@ import it.unimi.di.sweng.eventfinderbot.model.Request;
 import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
+import it.unimi.di.sweng.eventfinderbot.model.RequestDetails;
 import it.unimi.di.sweng.eventfinderbot.model.RequestHereToday;
 
 import java.util.Date;
@@ -32,5 +33,26 @@ public class RequestFactory {
         Date date = new Date(message.date());
         Location location = new Location(message.location().latitude(), message.location().longitude());
         return new RequestHereToday(chat.id(), location, date);
+    }
+
+    public Request createDetailsRequest(){
+        message = update.message();
+        chat = message.chat();
+
+        long chatId = chat.id();
+        int index;
+
+        String msg = message.text();
+        msg = msg.replace(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(1),"");
+        if(msg.length()> 0) {
+            try {
+                index = Integer.parseInt(msg);
+            } catch (NumberFormatException nfe){
+                return null;
+            }
+            if(index >=0 && index <=4)
+                return new RequestDetails(chatId, index);
+        }
+        return null;
     }
 }

@@ -18,4 +18,8 @@ public class CommandFactory {
     public StartCommand createStartCommand(Update update){
         return new StartCommand(update);
     }
+
+    public Command createDetailsCommad(Update update) {
+        return new DetailsCommand(update);
+    }
 }

@@ -26,6 +26,7 @@ public class MockConciergeFactory extends AbstractConciergeFactory {
                 when(event.getName()).thenReturn("Concerto Verdi");
                 when(event.getDescription()).thenReturn("VIVA Verdi");
                 when(event.getStart()).thenReturn("2016-06-11T03:00:00");
+                when(event.getUrl()).thenReturn("www.amazon.it");
                 events.add(event);
                 return new Response(events, Response.ResponseType.HERE_AND_NOW, request.getChatId());
             }
