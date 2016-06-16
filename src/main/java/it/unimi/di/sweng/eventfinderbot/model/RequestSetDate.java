@@ -9,7 +9,7 @@ public class RequestSetDate extends Request {
 
 	private Date date;
 
-	protected RequestSetDate(long chatId, Date date) {
+	public RequestSetDate(long chatId, Date date) {
 		super(chatId);
 		this.date = date;
 	}

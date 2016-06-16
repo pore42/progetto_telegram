@@ -7,7 +7,7 @@ public class RequestSetCity extends Request {
 
 	private String city;
 
-	protected RequestSetCity(long chatId, String city) {
+	public RequestSetCity(long chatId, String city) {
 		super(chatId);
 		this.city = city;
 	}
