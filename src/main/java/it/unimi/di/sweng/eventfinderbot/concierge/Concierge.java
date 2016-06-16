@@ -55,7 +55,9 @@ public class Concierge implements IConcierge {
 			try {
 				Event event = lastResponse.getContent().get(((RequestAddToMyEvents) request).getIndex());
 				if (userEvents == null) userEvents = new ArrayList<Event>();
-				userEvents.add(event);
+
+                if (!userEvents.contains(event))
+				    userEvents.add(event);
 
 				state = ConciergeState.INITIAL;
 				partialRequest = null;

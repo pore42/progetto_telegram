@@ -47,7 +47,7 @@ public class SendDateCommand extends Command {
                 eventIndex++;
             }
         }else{
-            String headerMessage = "*Non ho trovato eventi oggi nei tuoi dintorni*";
+            String headerMessage = "*Non ho trovato eventi che soddisfano la tua ricerca*";
             super.addHeadermessage(chatId, headerMessage);
         }
         return messagesList;
