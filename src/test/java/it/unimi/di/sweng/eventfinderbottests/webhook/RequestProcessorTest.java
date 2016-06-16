@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.BotUtils;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import it.unimi.di.sweng.eventfinderbot.concierge.AbstractConciergeFactory;
+import it.unimi.di.sweng.eventfinderbot.concierge.ConciergeState;
 import it.unimi.di.sweng.eventfinderbot.concierge.IConcierge;
 import it.unimi.di.sweng.eventfinderbot.model.Event;
 import it.unimi.di.sweng.eventfinderbot.model.Request;
@@ -44,6 +45,11 @@ public class RequestProcessorTest {
                     List<Event> events = new ArrayList<Event>();
                     return new Response(events, Response.ResponseType.HERE_AND_NOW, request.getChatId());
                 }
+
+                @Override
+                public ConciergeState getState() {
+                    return null;
+                }
             };
         }
     }
@@ -63,6 +69,11 @@ public class RequestProcessorTest {
 
                     return new Response(Arrays.asList(eVerdi, eBach), Response.ResponseType.HERE_AND_NOW, request.getChatId());
                 }
+
+                @Override
+                public ConciergeState getState() {
+                    return null;
+                }
             };
         }
     }
@@ -75,6 +86,11 @@ public class RequestProcessorTest {
                 @Override
                 public Response execute(Request request) {
                     return new Response(new ArrayList<Event>(), Response.ResponseType.HERE_AND_NOW, request.getChatId());
+                }
+
+                @Override
+                public ConciergeState getState() {
+                    return null;
                 }
             };
         }
