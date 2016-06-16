@@ -1,5 +1,6 @@
 package it.unimi.di.sweng.eventfinderbottests.concierge;
 
+import it.unimi.di.sweng.eventfinderbot.concierge.ConciergeState;
 import it.unimi.di.sweng.eventfinderbot.concierge.EBApiStaticWrapper;
 import it.unimi.di.sweng.eventfinderbot.concierge.Concierge;
 import it.unimi.di.sweng.eventfinderbot.concierge.ConciergeFactoryConcrete;
@@ -10,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.powermock.api.support.membermodification.MemberModifier;
 
+import java.net.Authenticator;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -198,5 +200,70 @@ public class TestConcierge {
 		Response actualResponse = concierge.execute(request);
 		assertEquals(Response.ResponseType.MY_EVENTS, actualResponse.getType());
 		assertEquals(1, actualResponse.getContent().size());
+	}
+
+	@Test
+	public void testSearch() {
+
+		ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
+		Concierge concierge = (Concierge) factory.instance();
+
+		RequestStartFind request = new RequestStartFind(123456);
+
+		assertEquals(concierge.getState(), ConciergeState.INITIAL);
+		assertEquals(concierge.execute(request).getType(), Response.ResponseType.SEARCH_STARTED);
+		assertEquals(concierge.getState(), ConciergeState.STARTED);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testSearch2() throws IllegalAccessException {
+
+		ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
+		Concierge concierge = (Concierge) factory.instance();
+		MemberModifier.field(Concierge.class, "state").set(concierge, ConciergeState.INITIAL);
+
+		RequestSetCity request = new RequestSetCity(123456, "Varese");
+		concierge.execute(request);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testSearch3() throws IllegalAccessException {
+
+		ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
+		Concierge concierge = (Concierge) factory.instance();
+		MemberModifier.field(Concierge.class, "state").set(concierge, ConciergeState.STARTED);
+
+		RequestSetCity request = new RequestSetCity(123456, "Varese");
+		concierge.execute(request);
+
+		assertEquals(concierge.execute(request).getType(), Response.ResponseType.CITY_SET);
+		assertEquals(concierge.getState(), ConciergeState.SET_DATE);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testSearch4() throws IllegalAccessException {
+
+		ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
+		Concierge concierge = (Concierge) factory.instance();
+		MemberModifier.field(Concierge.class, "state").set(concierge, ConciergeState.INITIAL);
+
+		RequestSetDate request = new RequestSetDate(123456, new Date());
+		concierge.execute(request);
+	}
+
+	@Test
+	public void testSearch6() throws IllegalAccessException {
+
+		ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
+		Concierge concierge = (Concierge) factory.instance();
+		MemberModifier.field(Concierge.class, "state").set(concierge, ConciergeState.STARTED);
+
+		RequestSetCity request1 = new RequestSetCity(123456, "Varese");
+		concierge.execute(request1);
+
+		RequestSetDate request2 = new RequestSetDate(123456, new Date());
+
+		assertEquals(concierge.execute(request2).getType(), Response.ResponseType.FIND_RESULT);
+		assertEquals(concierge.getState(), ConciergeState.INITIAL);
 	}
 }

@@ -1,6 +1,7 @@
 package it.unimi.di.sweng.eventfinderbottests.webhook;
 
 import it.unimi.di.sweng.eventfinderbot.concierge.AbstractConciergeFactory;
+import it.unimi.di.sweng.eventfinderbot.concierge.ConciergeState;
 import it.unimi.di.sweng.eventfinderbot.concierge.IConcierge;
 import it.unimi.di.sweng.eventfinderbot.model.Event;
 import it.unimi.di.sweng.eventfinderbot.model.Request;
@@ -29,6 +30,11 @@ public class MockConciergeFactory extends AbstractConciergeFactory {
                 when(event.getUrl()).thenReturn("www.amazon.it");
                 events.add(event);
                 return new Response(events, Response.ResponseType.HERE_AND_NOW, request.getChatId());
+            }
+
+            @Override
+            public ConciergeState getState() {
+                return null;
             }
         };
     }

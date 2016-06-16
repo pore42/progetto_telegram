@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.BotUtils;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import it.unimi.di.sweng.eventfinderbot.concierge.AbstractConciergeFactory;
+import it.unimi.di.sweng.eventfinderbot.concierge.ConciergeState;
 import it.unimi.di.sweng.eventfinderbot.concierge.IConcierge;
 import it.unimi.di.sweng.eventfinderbot.model.Event;
 import it.unimi.di.sweng.eventfinderbot.model.Request;
@@ -44,6 +45,11 @@ public class RequestProcessorTest {
                     List<Event> events = new ArrayList<Event>();
                     return new Response(events, Response.ResponseType.HERE_AND_NOW, request.getChatId());
                 }
+
+                @Override
+                public ConciergeState getState() {
+                    return null;
+                }
             };
         }
     }
@@ -63,6 +69,11 @@ public class RequestProcessorTest {
 
                     return new Response(Arrays.asList(eVerdi, eBach), Response.ResponseType.HERE_AND_NOW, request.getChatId());
                 }
+
+                @Override
+                public ConciergeState getState() {
+                    return null;
+                }
             };
         }
     }
@@ -76,10 +87,45 @@ public class RequestProcessorTest {
                 public Response execute(Request request) {
                     return new Response(new ArrayList<Event>(), Response.ResponseType.HERE_AND_NOW, request.getChatId());
                 }
+
+                @Override
+                public ConciergeState getState() {
+                    return null;
+                }
             };
         }
     }
 
+    private class MockConciergeFactorySearch extends AbstractConciergeFactory {
+
+        @Override
+        public IConcierge instance() {
+            return new IConcierge() {
+                int flag = 0;
+                @Override
+                public Response execute(Request request) {
+                    Event eVerdi = mock(Event.class);
+                    when(eVerdi.getName()).thenReturn("Concerto Verdi");
+
+                    Event eBach = mock(Event.class);
+                    when(eBach.getName()).thenReturn("Concerto Bach");
+
+                    return new Response(Arrays.asList(eVerdi, eBach), Response.ResponseType.HERE_AND_NOW, request.getChatId());
+                }
+
+                @Override
+                public ConciergeState getState() {
+                    if(flag == 0) {
+                        flag = 1;
+                        return ConciergeState.STARTED;
+                    }
+                    else
+                        return ConciergeState.SET_DATE;
+
+                }
+            };
+        }
+    }
     @Test
     public void testRequestHereToday(){
 
@@ -351,6 +397,7 @@ public class RequestProcessorTest {
 
         assertEquals(2, message.size());
     }
+
     @Test
     public void testRequestGetMyEventsEmpty(){
 
@@ -378,5 +425,73 @@ public class RequestProcessorTest {
         List<SendMessage> message = reqProcessor.process();
 
         assertEquals(1, message.size());
+    }
+
+    @Test
+    public void testRequestSearch(){
+
+        String searchUpdate = "{ \"update_id\": 50926117, \"message\": { \"message_id\": 381, \"from\": { \"id\": 15241231, " +
+                "\"first_name\": \"Imran\", \"last_name\": \"Zazzá\", \"username\": \"Zazza\" }, \"date\": 1464977821," +
+                " \"chat\": { \"id\": 15241231, \"type\": \"private\", \"first_name\": \"Imran\", \"last_name\": " +
+                "\"Zazzá\", \"username\": \"Zazza\", \"title\": \"\\\"null\\\"\" }, \"forward_from\": null, " +
+                "\"forward_from_chat\": null, \"forward_date\": null, \"reply_to_message\": null, \"text\": \"\uD83D\uDD0E Cerca Eventi\", " +
+                "\"entities\": [ { \"type\": \"bot_command\", \"offset\": 0, \"length\": 6, " +
+                "\"url\": \"\\\"null\\\"\" } ], \"audio\": null, \"document\": null, \"photo\": null, " +
+                "\"sticker\": null, \"video\": null, \"voice\": null, \"caption\": \"\\\"null\\\"\", " +
+                "\"contact\": null, \"location\": null, \"venue\": null, \"new_chat_member\": null, " +
+                "\"left_chat_member\": null, \"new_chat_title\": \"\\\"null\\\"\", \"new_chat_photo\": null," +
+                " \"delete_chat_photo\": null, \"group_chat_created\": null, \"supergroup_chat_created\": null, " +
+                "\"channel_chat_created\": null, \"migrate_to_chat_id\": null, \"migrate_from_chat_id\": null, " +
+                "\"pinned_message\": null }, \"inline_query\": null, \"chosen_inline_result\": null, " +
+                "\"callback_query\": null }";
+
+
+        String positionUpdate = "{ \"update_id\": 50926117, \"message\": { \"message_id\": 381, \"from\": { \"id\": 15241231, " +
+                "\"first_name\": \"Imran\", \"last_name\": \"Zazzá\", \"username\": \"Zazza\" }, \"date\": 1464977821," +
+                " \"chat\": { \"id\": 15241231, \"type\": \"private\", \"first_name\": \"Imran\", \"last_name\": " +
+                "\"Zazzá\", \"username\": \"Zazza\", \"title\": \"\\\"null\\\"\" }, \"forward_from\": null, " +
+                "\"forward_from_chat\": null, \"forward_date\": null, \"reply_to_message\": null, \"text\": Varese\", " +
+                "\"entities\": [ { \"type\": \"bot_command\", \"offset\": 0, \"length\": 6, " +
+                "\"url\": \"\\\"null\\\"\" } ], \"audio\": null, \"document\": null, \"photo\": null, " +
+                "\"sticker\": null, \"video\": null, \"voice\": null, \"caption\": \"\\\"null\\\"\", " +
+                "\"contact\": null, \"location\": null, \"venue\": null, \"new_chat_member\": null, " +
+                "\"left_chat_member\": null, \"new_chat_title\": \"\\\"null\\\"\", \"new_chat_photo\": null," +
+                " \"delete_chat_photo\": null, \"group_chat_created\": null, \"supergroup_chat_created\": null, " +
+                "\"channel_chat_created\": null, \"migrate_to_chat_id\": null, \"migrate_from_chat_id\": null, " +
+                "\"pinned_message\": null }, \"inline_query\": null, \"chosen_inline_result\": null, " +
+                "\"callback_query\": null }";
+
+        String dateUpdate = "{ \"update_id\": 50926117, \"message\": { \"message_id\": 381, \"from\": { \"id\": 15241231, " +
+                "\"first_name\": \"Imran\", \"last_name\": \"Zazzá\", \"username\": \"Zazza\" }, \"date\": 1464977821," +
+                " \"chat\": { \"id\": 15241231, \"type\": \"private\", \"first_name\": \"Imran\", \"last_name\": " +
+                "\"Zazzá\", \"username\": \"Zazza\", \"title\": \"\\\"null\\\"\" }, \"forward_from\": null, " +
+                "\"forward_from_chat\": null, \"forward_date\": null, \"reply_to_message\": null, \"text\": \"11/06/2016\", " +
+                "\"entities\": [ { \"type\": \"bot_command\", \"offset\": 0, \"length\": 6, " +
+                "\"url\": \"\\\"null\\\"\" } ], \"audio\": null, \"document\": null, \"photo\": null, " +
+                "\"sticker\": null, \"video\": null, \"voice\": null, \"caption\": \"\\\"null\\\"\", " +
+                "\"contact\": null, \"location\": null, \"venue\": null, \"new_chat_member\": null, " +
+                "\"left_chat_member\": null, \"new_chat_title\": \"\\\"null\\\"\", \"new_chat_photo\": null," +
+                " \"delete_chat_photo\": null, \"group_chat_created\": null, \"supergroup_chat_created\": null, " +
+                "\"channel_chat_created\": null, \"migrate_to_chat_id\": null, \"migrate_from_chat_id\": null, " +
+                "\"pinned_message\": null }, \"inline_query\": null, \"chosen_inline_result\": null, " +
+                "\"callback_query\": null }";
+
+        EventFinderBot.destroy();
+
+        EventFinderBot.initialize(new MockConciergeFactorySearch());
+
+        Update update = BotUtils.parseUpdate(searchUpdate);
+        RequestProcessor reqProcessor = new RequestProcessor(update);
+         reqProcessor.process();
+
+        update = BotUtils.parseUpdate(positionUpdate);
+        reqProcessor = new RequestProcessor(update);
+        reqProcessor.process();
+
+        update = BotUtils.parseUpdate(dateUpdate);
+        reqProcessor = new RequestProcessor(update);
+        List<SendMessage> message = reqProcessor.process();
+
+        assertEquals(3, message.size());
     }
 }

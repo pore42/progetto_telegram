@@ -23,4 +23,8 @@ public final class EBApiStaticWrapper {
 
         return api.getEvents(location, date);
     }
+    public static List<Event> getEvents(String city, Date date) {
+
+        return api.getEvents(city, date);
+    }
 }

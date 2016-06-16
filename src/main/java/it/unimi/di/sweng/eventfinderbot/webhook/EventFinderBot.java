@@ -62,6 +62,10 @@ public class EventFinderBot {
         return userConcierge.execute(request);
     }
 
+    public IConcierge getUserConcierge(long userId){
+        return userList.get(userId);
+    }
+
     public static boolean destroy(){
         instance = null;
         return true;

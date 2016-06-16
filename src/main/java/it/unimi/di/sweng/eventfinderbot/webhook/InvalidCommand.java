@@ -11,15 +11,23 @@ import java.util.List;
  */
 public class InvalidCommand extends Command {
 
+    private String errorMessage;
     public  InvalidCommand(Update update){
         super.update = update;
         super.messagesList = new ArrayList<SendMessage>();
+        this.errorMessage = "Comando non valido";
+    }
+
+    public  InvalidCommand(Update update, String errorMessage){
+        super.update = update;
+        super.messagesList = new ArrayList<SendMessage>();
+        this.errorMessage = errorMessage;
     }
 
     @Override
     public List<SendMessage> execute() {
         long chatId = update.message().chat().id();
-        SendMessage invalidCommandMessage = new SendMessage(chatId, "Comando non valido");
+        SendMessage invalidCommandMessage = new SendMessage(chatId, errorMessage);
         messagesList.add(invalidCommandMessage);
         
         super.sendCommandsKeyboard(chatId);

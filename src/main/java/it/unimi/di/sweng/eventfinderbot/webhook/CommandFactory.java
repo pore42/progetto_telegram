@@ -30,4 +30,16 @@ public class CommandFactory {
     public Command createGetMyEventsCommand(Update update) {
         return new GetMyEventsCommand(update);
     }
+
+    public Command createSearchCommand(Update update) {
+        return new StartSearchCommand(update);
+    }
+
+    public Command createSendPositionCommand(Update update) {
+        return new SendPositionCommand(update);
+    }
+
+    public Command createSendDateCommand(Update update) {
+        return new SendDateCommand(update);
+    }
 }

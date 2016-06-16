@@ -9,4 +9,5 @@ import it.unimi.di.sweng.eventfinderbot.model.Response;
 public interface IConcierge {
 
     Response execute(Request request);
+    ConciergeState getState();
 }
