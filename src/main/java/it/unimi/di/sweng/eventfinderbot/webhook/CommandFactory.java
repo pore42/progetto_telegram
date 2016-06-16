@@ -26,4 +26,8 @@ public class CommandFactory {
     public Command createAddToMyEventsCommnad(Update update) {
         return new AddToMyEventsCommand(update);
     }
+
+    public Command createGetMyEventsCommand(Update update) {
+        return new GetMyEventsCommand(update);
+    }
 }

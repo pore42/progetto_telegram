@@ -73,4 +73,9 @@ public class RequestFactory {
         }
         return null;
     }
+
+    public Request createGetMyEventsRequest() {
+        chat = update.message().chat();
+        return new RequestGetMyEvents(chat.id());
+    }
 }

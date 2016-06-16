@@ -47,6 +47,9 @@ public class RequestProcessor {
         if(isAddToMyEventsCommand(message.text()))
             return commandFactory.createAddToMyEventsCommnad(update);
 
+        if(isGetMyEventsCommand(message.text()))
+            return commandFactory.createGetMyEventsCommand(update);
+
         return commandFactory.createrInvalidCommand(update);
     }
 
@@ -80,4 +83,9 @@ public class RequestProcessor {
     private boolean isAddToMyEventsCommand(String text) {
         return text.contains(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(2));
     }
+
+    private boolean isGetMyEventsCommand(String text) {
+        return text.equals(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(3));
+    }
+
 }

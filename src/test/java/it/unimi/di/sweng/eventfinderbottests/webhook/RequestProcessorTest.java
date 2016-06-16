@@ -20,6 +20,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RequestProcessorTest {
@@ -42,6 +43,38 @@ public class RequestProcessorTest {
                 public Response execute(Request request) {
                     List<Event> events = new ArrayList<Event>();
                     return new Response(events, Response.ResponseType.HERE_AND_NOW, request.getChatId());
+                }
+            };
+        }
+    }
+
+    private class MockConciergeFactoryMyEvents extends AbstractConciergeFactory {
+
+        @Override
+        public IConcierge instance() {
+            return new IConcierge() {
+                @Override
+                public Response execute(Request request) {
+                    Event eVerdi = mock(Event.class);
+                    when(eVerdi.getName()).thenReturn("Concerto Verdi");
+
+                    Event eBach = mock(Event.class);
+                    when(eBach.getName()).thenReturn("Concerto Bach");
+
+                    return new Response(Arrays.asList(eVerdi, eBach), Response.ResponseType.HERE_AND_NOW, request.getChatId());
+                }
+            };
+        }
+    }
+
+    private class MockConciergeFactoryMyEventsEmpty extends AbstractConciergeFactory {
+
+        @Override
+        public IConcierge instance() {
+            return new IConcierge() {
+                @Override
+                public Response execute(Request request) {
+                    return new Response(new ArrayList<Event>(), Response.ResponseType.HERE_AND_NOW, request.getChatId());
                 }
             };
         }
@@ -288,5 +321,62 @@ public class RequestProcessorTest {
 
         List<SendMessage> message = reqProcessor.process();
         assertEquals("Fatto! Agggiunto alla tua lista.", message.get(0).getParameters().get("text").toString());
+    }
+
+    @Test
+    public void testRequestGetMyEvents(){
+
+        String addEventUpdate = "{ \"update_id\": 50926117, \"message\": { \"message_id\": 381, \"from\": { \"id\": 15241231, " +
+                "\"first_name\": \"Imran\", \"last_name\": \"Zazzá\", \"username\": \"Zazza\" }, \"date\": 1464977821," +
+                " \"chat\": { \"id\": 15241231, \"type\": \"private\", \"first_name\": \"Imran\", \"last_name\": " +
+                "\"Zazzá\", \"username\": \"Zazza\", \"title\": \"\\\"null\\\"\" }, \"forward_from\": null, " +
+                "\"forward_from_chat\": null, \"forward_date\": null, \"reply_to_message\": null, \"text\": \"\uD83D\uDCC5 Miei Eventi\", " +
+                "\"entities\": [ { \"type\": \"bot_command\", \"offset\": 0, \"length\": 6, " +
+                "\"url\": \"\\\"null\\\"\" } ], \"audio\": null, \"document\": null, \"photo\": null, " +
+                "\"sticker\": null, \"video\": null, \"voice\": null, \"caption\": \"\\\"null\\\"\", " +
+                "\"contact\": null, \"location\": null, \"venue\": null, \"new_chat_member\": null, " +
+                "\"left_chat_member\": null, \"new_chat_title\": \"\\\"null\\\"\", \"new_chat_photo\": null," +
+                " \"delete_chat_photo\": null, \"group_chat_created\": null, \"supergroup_chat_created\": null, " +
+                "\"channel_chat_created\": null, \"migrate_to_chat_id\": null, \"migrate_from_chat_id\": null, " +
+                "\"pinned_message\": null }, \"inline_query\": null, \"chosen_inline_result\": null, " +
+                "\"callback_query\": null }";
+
+        Update update = BotUtils.parseUpdate(addEventUpdate);
+        EventFinderBot.destroy();
+        EventFinderBot.initialize(new MockConciergeFactoryMyEvents());
+
+        RequestProcessor reqProcessor = new RequestProcessor(update);
+
+        List<SendMessage> message = reqProcessor.process();
+
+        assertEquals(2, message.size());
+    }
+    @Test
+    public void testRequestGetMyEventsEmpty(){
+
+        String addEventUpdate = "{ \"update_id\": 50926117, \"message\": { \"message_id\": 381, \"from\": { \"id\": 15241231, " +
+                "\"first_name\": \"Imran\", \"last_name\": \"Zazzá\", \"username\": \"Zazza\" }, \"date\": 1464977821," +
+                " \"chat\": { \"id\": 15241231, \"type\": \"private\", \"first_name\": \"Imran\", \"last_name\": " +
+                "\"Zazzá\", \"username\": \"Zazza\", \"title\": \"\\\"null\\\"\" }, \"forward_from\": null, " +
+                "\"forward_from_chat\": null, \"forward_date\": null, \"reply_to_message\": null, \"text\": \"\uD83D\uDCC5 Miei Eventi\", " +
+                "\"entities\": [ { \"type\": \"bot_command\", \"offset\": 0, \"length\": 6, " +
+                "\"url\": \"\\\"null\\\"\" } ], \"audio\": null, \"document\": null, \"photo\": null, " +
+                "\"sticker\": null, \"video\": null, \"voice\": null, \"caption\": \"\\\"null\\\"\", " +
+                "\"contact\": null, \"location\": null, \"venue\": null, \"new_chat_member\": null, " +
+                "\"left_chat_member\": null, \"new_chat_title\": \"\\\"null\\\"\", \"new_chat_photo\": null," +
+                " \"delete_chat_photo\": null, \"group_chat_created\": null, \"supergroup_chat_created\": null, " +
+                "\"channel_chat_created\": null, \"migrate_to_chat_id\": null, \"migrate_from_chat_id\": null, " +
+                "\"pinned_message\": null }, \"inline_query\": null, \"chosen_inline_result\": null, " +
+                "\"callback_query\": null }";
+
+        Update update = BotUtils.parseUpdate(addEventUpdate);
+        EventFinderBot.destroy();
+        EventFinderBot.initialize(new MockConciergeFactoryMyEventsEmpty());
+
+        RequestProcessor reqProcessor = new RequestProcessor(update);
+
+        List<SendMessage> message = reqProcessor.process();
+
+        assertEquals(1, message.size());
     }
 }
