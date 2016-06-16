@@ -73,9 +73,4 @@ public class EBApiTestsIntegration {
 
 	}
 
-	@Test
-	public void testStartDate() throws Exception {
-
-	}
-
 }
