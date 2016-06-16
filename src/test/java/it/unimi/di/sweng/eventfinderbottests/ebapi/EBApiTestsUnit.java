@@ -1,35 +1,49 @@
 package it.unimi.di.sweng.eventfinderbottests.ebapi;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.restlet.data.Method;
+
 import it.unimi.di.sweng.eventfinderbot.ebapi.ConcreteEBApi;
 import it.unimi.di.sweng.eventfinderbot.ebapi.EventNotFoundException;
 import it.unimi.di.sweng.eventfinderbot.ebapi.IEbApi;
 import it.unimi.di.sweng.eventfinderbot.model.Event;
 import it.unimi.di.sweng.eventfinderbot.model.Location;
 
-import org.junit.*;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.restlet.data.Method;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-
-import static org.junit.Assert.*;
-
 public class EBApiTestsUnit {
 	
 
 	public static MockServer server;
 	public static String json;
+	static ByteArrayOutputStream logOut;
+	static Handler handler;
 	
 	@BeforeClass
 	public static void prima() throws Exception
 	{
 		server= new MockServer(8080);
+	   	logOut = new ByteArrayOutputStream();
+	   	handler = new StreamHandler(logOut, new SimpleFormatter());
+	   	Logger.getGlobal().addHandler(handler);
 	}
 	
 	@AfterClass
@@ -163,6 +177,20 @@ public class EBApiTestsUnit {
            IEbApi api = new ConcreteEBApi("http://localhost:8080");
            api.getEventById(id);
    	}  
+       
+       
+    @Test
+	public void testWrongExceptionHandling() throws Exception {
+    	String id = "123";
+    	Method wrongMethod = Method.PUT;
+    	server.setReply(wrongMethod, "/events/" + id + "/", null);
+    	IEbApi api = new ConcreteEBApi("http://localhost:8080");
+    	api.getEventById(id);
+    	handler.flush();
+    	assertTrue("exception in getEventById wasn't logged", 
+    			logOut.toString().contains("exception in getEventById"));
+    }
+
     
     @Test
 	public void testGetEventById() throws Exception 

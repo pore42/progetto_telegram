@@ -5,6 +5,7 @@ import it.unimi.di.sweng.eventfinderbot.model.Location;
 
 import org.restlet.Client;
 import org.restlet.Context;
+import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 import org.restlet.data.Status;
 import org.restlet.resource.ClientResource;
@@ -15,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConcreteEBApi implements IEbApi {
 
@@ -32,7 +35,7 @@ public class ConcreteEBApi implements IEbApi {
 	
 	private ClientResource setupClientHttps(String requestUrl) {
 		final Client client = new Client(new Context(), Protocol.HTTPS);
-		final ClientResource cr = new ClientResource(url + requestUrl);
+		final ClientResource cr = new ClientResource(Method.GET ,url + requestUrl);
 		cr.setNext(client);
 		return cr;
 	}
@@ -113,6 +116,7 @@ public class ConcreteEBApi implements IEbApi {
 		} catch (ResourceException e) {
 			if (e.getStatus().equals(Status.CLIENT_ERROR_NOT_FOUND))
 				throw new EventNotFoundException("Event with id " + id + " not found");
+			Logger.getGlobal().log(Level.WARNING, "exception in getEventById", e);
 		}
 		return event;
 	}
