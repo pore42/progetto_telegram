@@ -39,7 +39,8 @@ public class HereTodayCommand extends Command {
             int eventIndex = 0;
             for (Event event : events) {
                 eventName = event.getName() + "\n";
-                eventName += BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(1) + eventIndex;
+                eventName += BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(1) + eventIndex + "\n";
+                eventName += BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(2) + eventIndex;
                 eventMessage = new SendMessage(chatId, eventName);
                 messagesList.add(eventMessage);
 

@@ -18,6 +18,7 @@ public enum BotConfigs {
         ACCEPTED_COMMANDS = new ArrayList<>();
         ACCEPTED_COMMANDS.add("/start");
         ACCEPTED_COMMANDS.add("/details");
+        ACCEPTED_COMMANDS.add("/add");
 
         KEYBOARD_BUTTONS = new ReplyKeyboardMarkup(
                 new KeyboardButton[]{
