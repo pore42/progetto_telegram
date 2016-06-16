@@ -60,4 +60,9 @@ public class Concierge implements IConcierge {
 
         throw new IllegalStateException();
     }
+
+	@Override
+	public ConciergeState getState() {
+		return null;
+	}
 }
