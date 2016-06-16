@@ -41,8 +41,15 @@ public class RequestProcessor {
             return commandFactory.createStartCommand(update);
 
         if(isDetailsCommand(message.text())) {
-            return commandFactory.createDetailsCommad(update);
+            return commandFactory.createDetailsCommand(update);
         }
+
+        if(isAddToMyEventsCommand(message.text()))
+            return commandFactory.createAddToMyEventsCommnad(update);
+
+        if(isGetMyEventsCommand(message.text()))
+            return commandFactory.createGetMyEventsCommand(update);
+
         return commandFactory.createrInvalidCommand(update);
     }
 
@@ -73,5 +80,12 @@ public class RequestProcessor {
         return text.contains(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(1));
     }
 
+    private boolean isAddToMyEventsCommand(String text) {
+        return text.contains(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(2));
+    }
+
+    private boolean isGetMyEventsCommand(String text) {
+        return text.equals(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(3));
+    }
 
 }

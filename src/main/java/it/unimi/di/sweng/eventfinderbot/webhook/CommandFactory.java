@@ -19,7 +19,15 @@ public class CommandFactory {
         return new StartCommand(update);
     }
 
-    public Command createDetailsCommad(Update update) {
+    public Command createDetailsCommand(Update update) {
         return new DetailsCommand(update);
+    }
+
+    public Command createAddToMyEventsCommnad(Update update) {
+        return new AddToMyEventsCommand(update);
+    }
+
+    public Command createGetMyEventsCommand(Update update) {
+        return new GetMyEventsCommand(update);
     }
 }
