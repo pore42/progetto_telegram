@@ -30,9 +30,7 @@ public class ConcreteEBApi implements IEbApi {
 	public ConcreteEBApi(String url){
     	this.url = url;
     }
-	
 
-	
 	private ClientResource setupClientHttps(String requestUrl) {
 		final Client client = new Client(new Context(), Protocol.HTTPS);
 		final ClientResource cr = new ClientResource(Method.GET ,url + requestUrl);
@@ -40,34 +38,25 @@ public class ConcreteEBApi implements IEbApi {
 		return cr;
 	}
 
-
 	@Override
-    public List<Event> getEvents(Location location, Date date) {
-
+	public List<Event> getEvents(Location location, Date date) {
 		String requestUrl = createUrl(location, date);
+		return performRequest(requestUrl);
+	}
 
-        final GetEventsResource ge = setupClientHttps(requestUrl).wrap(GetEventsResource.class);
-        EBApiResponse response = ge.getEvents();
-        List<Event> events = response.getEvents();
-        
-        return events.subList(0, events.size() < Configs.INSTANCE.EBAPI_LIMIT() ? events.size() : Configs.INSTANCE.EBAPI_LIMIT());
-    }
-	
 	@Override
-	public List<Event> getEvents(String city, Date date)
-	{
+	public List<Event> getEvents(String city, Date date) {
 		String requestUrl = createUrl(city, date);
-		
+		return performRequest(requestUrl);
+	}
+
+	private List<Event> performRequest(String requestUrl) {
 		final GetEventsResource ge = setupClientHttps(requestUrl).wrap(GetEventsResource.class);
 		EBApiResponse response = ge.getEvents();
 		List<Event> events = response.getEvents();
-		
-		return events.subList(0, events.size() < Configs.INSTANCE.EBAPI_LIMIT() ? events.size() : Configs.INSTANCE.EBAPI_LIMIT());
-				
-	}
-	
-	
 
+		return events.subList(0, events.size() < Configs.INSTANCE.EBAPI_LIMIT() ? events.size() : Configs.INSTANCE.EBAPI_LIMIT());
+	}
 
 	private String getStringDate(Date date) {
 		TimeZone tz = TimeZone.getTimeZone("UTC");
@@ -78,7 +67,6 @@ public class ConcreteEBApi implements IEbApi {
 	}
 	
 	private String createUrl(Location location, Date date) {
-
         String token = "&token=" + Configs.INSTANCE.EBAPI_TOKEN();
 		String dateString = getStringDate(date);
 		String endPoint = "/events/search/";
@@ -89,8 +77,7 @@ public class ConcreteEBApi implements IEbApi {
 		return endPoint +  arguments + token;
 	}
 
-	private String createUrl(String city, Date date) 
-	{
+	private String createUrl(String city, Date date) {
 		String token = "&token=" + Configs.INSTANCE.EBAPI_TOKEN();
 		String dateString = getStringDate(date);
 		String endPoint = "/events/search/";
@@ -101,15 +88,11 @@ public class ConcreteEBApi implements IEbApi {
 		
 	}
 
-
-
-
 	@Override
 	public Event getEventById(String id) {
 		Event event = null;
 		String requestUrl = "/events/" + id + "/?token=" + Configs.INSTANCE.EBAPI_TOKEN();
-		
-		
+
 		final GetEventByIdResource ge = setupClientHttps(requestUrl).wrap(GetEventByIdResource.class);
 		try {
 			event = ge.getEventById(id);
