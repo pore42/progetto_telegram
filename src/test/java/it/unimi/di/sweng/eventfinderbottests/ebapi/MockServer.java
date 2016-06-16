@@ -1,7 +1,5 @@
 package it.unimi.di.sweng.eventfinderbottests.ebapi;
 
-import java.io.File;
-
 import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;

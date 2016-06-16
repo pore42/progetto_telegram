@@ -18,36 +18,35 @@ import java.util.List;
 import java.util.TimeZone;
 
 import static org.junit.Assert.*;
+
 public class EBApiTestsIntegration {
 
-    @Test
-    public void testSize() {
+	@Test
+	public void testSize() {
 
-        IEbApi api = new ConcreteEBApi();
-        Location milano = new Location(45.4654220, 9.1859240);
-        List<Event> events = api.getEvents(milano, new Date());
-        assertTrue(events.size() >= 0 && events.size() <= Configs.INSTANCE.EBAPI_LIMIT());
-    }
-    
-    @Test
-    public void testOrari()
-    {
-    	IEbApi api = new ConcreteEBApi();
-    	
-    	Date d = new Date();
-    	TimeZone tz = TimeZone.getTimeZone("UTC");
+		IEbApi api = new ConcreteEBApi();
+		Location milano = new Location(45.4654220, 9.1859240);
+		List<Event> events = api.getEvents(milano, new Date());
+		assertTrue(events.size() >= 0 && events.size() <= Configs.INSTANCE.EBAPI_LIMIT());
+	}
+
+	@Test
+	public void testOrari() {
+		IEbApi api = new ConcreteEBApi();
+
+		Date d = new Date();
+		TimeZone tz = TimeZone.getTimeZone("UTC");
 		DateFormat df = new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss");
 		df.setTimeZone(tz);
 		String data = df.format(d);
-    	
-    	List<Event> events = api.getEvents("milano", d);
 
-    	for(int i=0; i<events.size(); i++)
-    		assertTrue(    0 <=  (events.get(i).getStart().compareTo(data)));
- 
-    	
-    }
-    
+		List<Event> events = api.getEvents("milano", d);
+
+		for (int i = 0; i < events.size(); i++)
+			assertTrue(0 <= (events.get(i).getStart().compareTo(data)));
+
+	}
+
 	@Test
 	public void testGetEventByIdReturnsNotNullEvent() throws Exception {
 		IEbApi api = new ConcreteEBApi();
@@ -60,23 +59,23 @@ public class EBApiTestsIntegration {
 		assertEquals(someEvent.getDescription(), event.getDescription());
 		assertEquals(someEvent.getStart(), event.getStart());
 	}
-    
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-    
-    @Test
+
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+
+	@Test
 	public void testGetEventByIdThrowsEventNotFoundException() throws Exception {
-    	String id = "-1";
-    	thrown.expect(EventNotFoundException.class);
-    	thrown.expectMessage(id);
-        IEbApi api = new ConcreteEBApi();
-        api.getEventById(id);
-        
+		String id = "-1";
+		thrown.expect(EventNotFoundException.class);
+		thrown.expectMessage(id);
+		IEbApi api = new ConcreteEBApi();
+		api.getEventById(id);
+
 	}
-    
-    
-    
-    
-    
-    
+
+	@Test
+	public void testStartDate() throws Exception {
+
+	}
+
 }
