@@ -7,7 +7,7 @@ public class RequestAddToMyEvents extends Request {
 
 	private int index;
 
-	protected RequestAddToMyEvents(long chatId, int index) {
+	public RequestAddToMyEvents(long chatId, int index) {
 		super(chatId);
 		this.index = index;
 	}
