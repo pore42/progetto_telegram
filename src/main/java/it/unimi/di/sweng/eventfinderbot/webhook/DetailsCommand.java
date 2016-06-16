@@ -31,33 +31,36 @@ public class DetailsCommand extends Command {
 
             Response response = EventFinderBot.instance().executeCommmand(request);
 
-            String detailsMessage = "";
-            SendMessage eventMessage;
             List<Event> events = response.getContent();
             if (!events.isEmpty()) {
-
-                Event event = events.get(0);
-
-                String shortDesc = "";
-                if(event.getDescription().length() < 100 )
-                    shortDesc = event.getDescription();
-                else
-                    shortDesc = event.getDescription().substring(0, 100);
-
-                detailsMessage = "Dettagli evento\n" +
-                        "Nome: " + event.getName() + "\n" +
-                        "Descrizione: " + shortDesc +"\n" +
-                        "Inizio: " + event.getStart() + "\n" +
-                        "Url: " + event.getUrl();
-
-                eventMessage = new SendMessage(chatId, detailsMessage);
-
-                messagesList.add(eventMessage);
+                composeDetailsMessage(chatId, events);
             } else {
-                String headerMessage = "*Errore: impossibile trovare dettagli evento.";
+                String headerMessage = "*Errore: impossibile trovare dettagli evento.*";
                 super.addHeadermessage(chatId, headerMessage);
             }
         }
         return messagesList;
+    }
+
+    private void composeDetailsMessage(long chatId, List<Event> events) {
+        String detailsMessage;
+        SendMessage eventMessage;
+        Event event = events.get(0);
+
+        String shortDesc = "";
+        if(event.getDescription().length() < 100 )
+            shortDesc = event.getDescription();
+        else
+            shortDesc = event.getDescription().substring(0, 100);
+
+        detailsMessage = "Dettagli evento\n" +
+                "Nome: " + event.getName() + "\n" +
+                "Descrizione: " + shortDesc +"\n" +
+                "Inizio: " + event.getStart() + "\n" +
+                "Url: " + event.getUrl();
+
+        eventMessage = new SendMessage(chatId, detailsMessage);
+
+        messagesList.add(eventMessage);
     }
 }

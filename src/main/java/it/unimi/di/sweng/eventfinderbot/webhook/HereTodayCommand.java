@@ -28,28 +28,31 @@ public class HereTodayCommand extends Command {
 
         Response response = EventFinderBot.instance().executeCommmand(request);
 
-        String eventName = "";
-        SendMessage eventMessage;
-        java.util.List<Event> events = response.getContent();
+        List<Event> events = response.getContent();
         if(!events.isEmpty()){
-
-            String headerMessage = "*Eventi in programma oggi nei tuoi dintorni*";
-            super.addHeadermessage(chatId, headerMessage);
-
-            int eventIndex = 0;
-            for (Event event : events) {
-                eventName = event.getName() + "\n";
-                eventName += BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(1) + eventIndex + "\n";
-                eventName += BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(2) + eventIndex;
-                eventMessage = new SendMessage(chatId, eventName);
-                messagesList.add(eventMessage);
-
-                eventIndex++;
-            }
+            composeEventsMessages(chatId, events);
         }else{
             String headerMessage = "*Non ho trovato eventi oggi nei tuoi dintorni*";
             super.addHeadermessage(chatId, headerMessage);
         }
         return messagesList;
+    }
+
+    private void composeEventsMessages(long chatId, List<Event> events) {
+        String eventName;
+        SendMessage eventMessage;
+        String headerMessage = "*Eventi in programma oggi nei tuoi dintorni*";
+        super.addHeadermessage(chatId, headerMessage);
+
+        int eventIndex = 0;
+        for (Event event : events) {
+            eventName = event.getName() + "\n";
+            eventName += BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(1) + eventIndex + "\n";
+            eventName += BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(2) + eventIndex;
+            eventMessage = new SendMessage(chatId, eventName);
+            messagesList.add(eventMessage);
+
+            eventIndex++;
+        }
     }
 }

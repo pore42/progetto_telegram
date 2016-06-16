@@ -30,11 +30,9 @@ public class AddToMyEventsCommand extends Command {
         }else {
             long chatId = request.getChatId();
 
-            Response response = EventFinderBot.instance().executeCommmand(request);
+            EventFinderBot.instance().executeCommmand(request);
 
             String successMessage = "Fatto! Agggiunto alla tua lista.";
-            SendMessage eventMessage;
-
             super.addHeadermessage(chatId, successMessage);
         }
         return messagesList;

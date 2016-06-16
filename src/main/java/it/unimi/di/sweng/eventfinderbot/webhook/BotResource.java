@@ -38,7 +38,7 @@ public class BotResource extends ServerResource {
             List<SendMessage> messagesList = requestProcessor.process();
             for (SendMessage toSend : messagesList)
                 bot.execute(toSend);
-        }catch(IllegalStateException ise){
+        }catch(Exception e){
             getLogger().warning("BOT_RESOURCE: /details or /add command with last response null");
         }
 

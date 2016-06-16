@@ -29,31 +29,35 @@ public class GetMyEventsCommand extends Command {
         Response response = EventFinderBot.instance().executeCommmand(request);
 
         if(response.getContent().size() > 0) {
-            String eventName = "";
-            SendMessage eventMessage;
-            List<Event> events = response.getContent();
-            if (!events.isEmpty()) {
-
-                for(Event event: events) {
-                    String shortDesc = "";
-                    if(event.getDescription().length() < 100 )
-                        shortDesc = event.getDescription();
-                    else
-                        shortDesc = event.getDescription().substring(0, 100);
-
-                    eventName = "Nome: " + event.getName() + "\n" +
-                        "Descrizione: " + shortDesc +"\n" +
-                        "Inizio: " + event.getStart() + "\n";
-
-                    eventMessage = new SendMessage(chatId, eventName);
-                    messagesList.add(eventMessage);
-                }
-            }
+            composeEventsMessages(chatId, response);
         }else {
             String headerMessage = "Non hai salvato nessun evento.";
             super.addHeadermessage(chatId, headerMessage);
         }
 
         return messagesList;
+    }
+
+    private void composeEventsMessages(long chatId, Response response) {
+        String eventName = "";
+        SendMessage eventMessage;
+        List<Event> events = response.getContent();
+        if (!events.isEmpty()) {
+
+            for(Event event: events) {
+                String shortDesc = "";
+                if(event.getDescription().length() < 100 )
+                    shortDesc = event.getDescription();
+                else
+                    shortDesc = event.getDescription().substring(0, 100);
+
+                eventName = "Nome: " + event.getName() + "\n" +
+                    "Descrizione: " + shortDesc +"\n" +
+                    "Inizio: " + event.getStart() + "\n";
+
+                eventMessage = new SendMessage(chatId, eventName);
+                messagesList.add(eventMessage);
+            }
+        }
     }
 }
