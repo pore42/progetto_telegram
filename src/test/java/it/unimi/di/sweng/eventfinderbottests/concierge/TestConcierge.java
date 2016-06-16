@@ -137,7 +137,7 @@ public class TestConcierge {
     }
 
 	@Test
-	public void testAddMyEvents2() throws IllegalAccessException {
+	public void testMyEvents2() throws IllegalAccessException {
 
 		ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
 		Concierge concierge = (Concierge) factory.instance();
@@ -162,5 +162,41 @@ public class TestConcierge {
 		Response actualResponse = concierge.execute(request);
 		assertEquals(Response.ResponseType.ADD_TO_MY_EVENTS, actualResponse.getType());
 		assertEquals(0, actualResponse.getContent().size());
+	}
+
+	@Test
+	public void testGetMyEvents() {
+
+		ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
+		Concierge concierge = (Concierge) factory.instance();
+
+		RequestGetMyEvents request = new RequestGetMyEvents(123456);
+
+		Response actualResponse = concierge.execute(request);
+		assertEquals(Response.ResponseType.MY_EVENTS, actualResponse.getType());
+		assertEquals(0, actualResponse.getContent().size());
+	}
+
+	@Test
+	public void testGetMyEvents2() throws IllegalAccessException {
+
+		ConciergeFactoryConcrete factory = new ConciergeFactoryConcrete();
+		Concierge concierge = (Concierge) factory.instance();
+
+		RequestGetMyEvents request = new RequestGetMyEvents(123456);
+
+		List<Event> events = new ArrayList<Event>();
+		Event event = mock(Event.class);
+		when(event.getId()).thenReturn("1234212");
+		when(event.getName()).thenReturn("Concerto Verdi");
+		when(event.getDescription()).thenReturn("VIVA Verdi");
+		when(event.getStart()).thenReturn("2016-06-11T03:00:00");
+		events.add(event);
+
+		MemberModifier.field(Concierge.class, "userEvents").set(concierge, events);
+
+		Response actualResponse = concierge.execute(request);
+		assertEquals(Response.ResponseType.MY_EVENTS, actualResponse.getType());
+		assertEquals(1, actualResponse.getContent().size());
 	}
 }

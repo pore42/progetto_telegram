@@ -5,7 +5,7 @@ package it.unimi.di.sweng.eventfinderbot.model;
  */
 public class RequestGetMyEvents extends Request {
 
-	protected RequestGetMyEvents(long chatId) {
+	public RequestGetMyEvents(long chatId) {
 		super(chatId);
 	}
 }

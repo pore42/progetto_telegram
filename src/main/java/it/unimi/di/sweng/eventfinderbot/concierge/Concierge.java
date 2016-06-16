@@ -52,6 +52,11 @@ public class Concierge implements IConcierge {
 				throw new IllegalStateException();
 			}
 		}
+		else if (request instanceof RequestGetMyEvents) {
+
+			List<Event> shadowCopy = (userEvents == null) ? new ArrayList<>() : new ArrayList<>(userEvents);
+			return new Response(shadowCopy, Response.ResponseType.MY_EVENTS, request.getChatId());
+		}
 
         throw new IllegalStateException();
     }
