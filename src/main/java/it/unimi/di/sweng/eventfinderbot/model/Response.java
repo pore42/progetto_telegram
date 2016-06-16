@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Response {
 
-    public enum ResponseType { HERE_AND_NOW }
+    public enum ResponseType {EVENT_DETAILS, ADD_TO_MY_EVENTS, MY_EVENTS, HERE_AND_NOW }
 
     private ResponseType type;
     private long chatID;

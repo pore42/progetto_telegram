@@ -1,17 +1,8 @@
 package it.unimi.di.sweng.eventfinderbot.webhook;
 
-import it.unimi.di.sweng.eventfinderbot.concierge.AbstractConciergeFactory;
-import it.unimi.di.sweng.eventfinderbot.concierge.Concierge;
-import it.unimi.di.sweng.eventfinderbot.concierge.IConcierge;
-import it.unimi.di.sweng.eventfinderbot.model.Event;
-import it.unimi.di.sweng.eventfinderbot.model.Request;
-import it.unimi.di.sweng.eventfinderbot.model.Response;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 import org.restlet.service.LogService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Server {
 

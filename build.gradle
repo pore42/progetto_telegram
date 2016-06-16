@@ -45,6 +45,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'com.github.stefanbirkner:system-rules:1.16.0'
     testCompile 'org.mockito:mockito-core:1.+'
+    testCompile 'org.powermock:powermock-api-mockito:1.+'
+    testCompile 'org.powermock:powermock-module-junit4-rule-agent:1.+'
+    testCompile 'org.powermock:powermock-module-junit4-rule:1.+'
+    testCompile 'org.powermock:powermock-module-junit4:1.+'
 }
 
 pitest {
