@@ -5,7 +5,11 @@ import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Created by Imran on 02/06/16.
@@ -77,5 +81,27 @@ public class RequestFactory {
     public Request createGetMyEventsRequest() {
         chat = update.message().chat();
         return new RequestGetMyEvents(chat.id());
+    }
+
+    public Request createStartFindRequest() {
+        return new RequestStartFind(update.message().chat().id());
+    }
+
+    public Request createSetCityRequest() {
+        message = update.message();
+        return new RequestSetCity(message.chat().id(), message.text());
+    }
+
+    public Request createSetDateRequest() {
+        message = update.message();
+
+        SimpleDateFormat formatter = new SimpleDateFormat( "dd/MM/yyyy");
+        Date date = null;
+        try {
+            date = formatter.parse(message.text());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new RequestSetDate(message.chat().id(), date);
     }
 }

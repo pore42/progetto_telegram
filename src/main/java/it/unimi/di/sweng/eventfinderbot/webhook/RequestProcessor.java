@@ -4,7 +4,10 @@ import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import it.unimi.di.sweng.eventfinderbot.concierge.ConciergeState;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +53,25 @@ public class RequestProcessor {
         if(isGetMyEventsCommand(message.text()))
             return commandFactory.createGetMyEventsCommand(update);
 
+        if(isSearchEventsCommand(message.text()))
+            return commandFactory.createSearchCommand(update);
+
+
+        ConciergeState conciergeState = getConciergeState(message.chat().id());
+
+        if(conciergeState == ConciergeState.STARTED)
+            return commandFactory.createSendPositionCommand(update);
+
+        if(conciergeState == ConciergeState.SET_DATE){
+            SimpleDateFormat formatter = new SimpleDateFormat( "dd/MM/yyyy");
+            try {
+                formatter.parse(message.text());
+                return commandFactory.createSendDateCommand(update);
+            }catch (ParseException e) {
+                return new InvalidCommand(update, "Formato data non corretto");
+            }
+        }
+
         return commandFactory.createrInvalidCommand(update);
     }
 
@@ -88,4 +110,11 @@ public class RequestProcessor {
         return text.equals(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(3));
     }
 
+    private boolean isSearchEventsCommand(String text) {
+        return text.equals(BotConfigs.INSTANCE.ACCEPTED_COMMANDS.get(4));
+    }
+
+    public ConciergeState getConciergeState(long userId){
+        return EventFinderBot.instance().getUserConcierge(userId).getState();
+    }
 }

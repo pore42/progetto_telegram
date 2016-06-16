@@ -20,11 +20,13 @@ public enum BotConfigs {
         ACCEPTED_COMMANDS.add("/details");
         ACCEPTED_COMMANDS.add("/add");
         ACCEPTED_COMMANDS.add("\uD83D\uDCC5 Miei Eventi");
+        ACCEPTED_COMMANDS.add("\uD83D\uDD0E Cerca Eventi");
 
         KEYBOARD_BUTTONS = new ReplyKeyboardMarkup(
                 new KeyboardButton[]{
                         new KeyboardButton("\uD83D\uDCCD Eventi").requestLocation(true),
-                        new KeyboardButton("\uD83D\uDCC5 Miei Eventi")
+                        new KeyboardButton("\uD83D\uDCC5 Miei Eventi"),
+                        new KeyboardButton("\uD83D\uDD0E Cerca Eventi")
                 }
         ).resizeKeyboard(true);
     }
