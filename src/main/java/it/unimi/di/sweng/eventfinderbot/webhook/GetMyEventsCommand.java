@@ -35,7 +35,16 @@ public class GetMyEventsCommand extends Command {
             if (!events.isEmpty()) {
 
                 for(Event event: events) {
-                    eventName = event.getName();
+                    String shortDesc = "";
+                    if(event.getDescription().length() < 100 )
+                        shortDesc = event.getDescription();
+                    else
+                        shortDesc = event.getDescription().substring(0, 100);
+
+                    eventName = "Nome: " + event.getName() + "\n" +
+                        "Descrizione: " + shortDesc +"\n" +
+                        "Inizio: " + event.getStart() + "\n";
+
                     eventMessage = new SendMessage(chatId, eventName);
                     messagesList.add(eventMessage);
                 }
