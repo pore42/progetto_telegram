@@ -63,9 +63,11 @@ public class RequestProcessorTest {
                 public Response execute(Request request) {
                     Event eVerdi = mock(Event.class);
                     when(eVerdi.getName()).thenReturn("Concerto Verdi");
+                    when(eVerdi.getDescription()).thenReturn("Descrizione concerto Verdi");
 
                     Event eBach = mock(Event.class);
                     when(eBach.getName()).thenReturn("Concerto Bach");
+                    when(eBach.getDescription()).thenReturn("Descrizione concerto bach");
 
                     return new Response(Arrays.asList(eVerdi, eBach), Response.ResponseType.HERE_AND_NOW, request.getChatId());
                 }

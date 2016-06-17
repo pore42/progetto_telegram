@@ -40,38 +40,39 @@ public class RequestProcessor {
         if(isHereAndNowCommand(message))
             return commandFactory.createHereTodayCommand(update);
 
-        if(isStartCommand(message.text()))
-            return commandFactory.createStartCommand(update);
+        if(message.text() != null) {
+            if (isStartCommand(message.text()))
+                return commandFactory.createStartCommand(update);
 
-        if(isDetailsCommand(message.text())) {
-            return commandFactory.createDetailsCommand(update);
-        }
+            if (isDetailsCommand(message.text())) {
+                return commandFactory.createDetailsCommand(update);
+            }
 
-        if(isAddToMyEventsCommand(message.text()))
-            return commandFactory.createAddToMyEventsCommnad(update);
+            if (isAddToMyEventsCommand(message.text()))
+                return commandFactory.createAddToMyEventsCommnad(update);
 
-        if(isGetMyEventsCommand(message.text()))
-            return commandFactory.createGetMyEventsCommand(update);
+            if (isGetMyEventsCommand(message.text()))
+                return commandFactory.createGetMyEventsCommand(update);
 
-        if(isSearchEventsCommand(message.text()))
-            return commandFactory.createSearchCommand(update);
+            if (isSearchEventsCommand(message.text()))
+                return commandFactory.createSearchCommand(update);
 
 
-        ConciergeState conciergeState = getConciergeState(message.chat().id());
+            ConciergeState conciergeState = getConciergeState(message.chat().id());
 
-        if(conciergeState == ConciergeState.STARTED)
-            return commandFactory.createSendPositionCommand(update);
+            if (conciergeState == ConciergeState.STARTED)
+                return commandFactory.createSendPositionCommand(update);
 
-        if(conciergeState == ConciergeState.SET_DATE){
-            SimpleDateFormat formatter = new SimpleDateFormat( "dd/MM/yyyy");
-            try {
-                formatter.parse(message.text());
-                return commandFactory.createSendDateCommand(update);
-            }catch (ParseException e) {
-                return new InvalidCommand(update, "Formato data non corretto");
+            if (conciergeState == ConciergeState.SET_DATE) {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    formatter.parse(message.text());
+                    return commandFactory.createSendDateCommand(update);
+                } catch (ParseException e) {
+                    return new InvalidCommand(update, "Formato data non corretto");
+                }
             }
         }
-
         return commandFactory.createrInvalidCommand(update);
     }
 
